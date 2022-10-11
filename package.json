@@ -1,0 +1,21 @@
+{
+  "name": "v41-bears-team-20",
+  "version": "1.0.0",
+  "description": "Your project's `readme` is as important to success as your code. For  this reason you should put as much care into its creation and maintenance as you would any other component of the application.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "cd client && npm install && cd ../server && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chingu-voyages/v41-bears-team-20.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chingu-voyages/v41-bears-team-20/issues"
+  },
+  "homepage": "https://github.com/chingu-voyages/v41-bears-team-20#readme"
+}
