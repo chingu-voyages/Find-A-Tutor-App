@@ -15,4 +15,4 @@ services:
       environment:
         ADMINER_DEFAULT_SERVER: local-db
       ports:
-        - 8080:8080
+        - 3307:8080
