@@ -8,6 +8,8 @@ services:
             MYSQL_ROOT_PASSWORD: 123456
             MYSQL_ROOT_HOST: '%'
             MYSQL_DATABASE: bears-local-db
+        volumes:
+          - ./mysql:/var/lib/mysql
     adminer_container:
       image: adminer:latest
       environment:
