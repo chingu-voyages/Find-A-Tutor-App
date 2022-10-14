@@ -31,6 +31,14 @@
       "prettier --write"
     ]
   },
+  "lint-staged": {
+    "src/**/*.+(ts)": [
+      "eslint --fix"
+    ],
+    "src/**/*.{ts,json}": [
+      "prettier --write"
+    ]
+  },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
