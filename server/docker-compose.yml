@@ -3,7 +3,7 @@ services:
         image: mysql:8.0
         container_name: local-db
         ports:
-            - 3306:3306
+            - ${MYSQL_OUTER_PORT}:${MYSQL_INNER_PORT}
         environment:
             MYSQL_ROOT_PASSWORD: 123456
             MYSQL_ROOT_HOST: '%'
@@ -15,4 +15,4 @@ services:
       environment:
         ADMINER_DEFAULT_SERVER: local-db
       ports:
-        - 3307:8080
+        - ${DB_VIEWER_OUTER_PORT}:${DB_VIEWER_INNER_PORT}
