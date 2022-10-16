@@ -19,7 +19,17 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "db:docker:up": "docker compose up -d",
+    "db:docker:down": "docker compose down"
+  },
+  "lint-staged": {
+    "src/**/*.+(ts)": [
+      "eslint --fix"
+    ],
+    "src/**/*.{ts,json}": [
+      "prettier --write"
+    ]
   },
   "lint-staged": {
     "src/**/*.+(ts)": [
@@ -31,9 +41,11 @@
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
+    "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/typeorm": "^9.0.1",
+    "@prisma/client": "^4.4.0",
     "dotenv": "^16.0.3",
     "mysql2": "^2.3.3",
     "reflect-metadata": "^0.1.13",
@@ -57,6 +69,7 @@
     "jest": "28.1.3",
     "lint-staged": "^13.0.3",
     "prettier": "^2.3.2",
+    "prisma": "^4.4.0",
     "source-map-support": "^0.5.20",
     "supertest": "^6.1.3",
     "ts-jest": "28.0.8",
