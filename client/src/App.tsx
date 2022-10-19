@@ -3,12 +3,11 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-} from "react-router-dom";
+} from 'react-router-dom';
+import Index from './pages';
 
 const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<main className="App">Hello World</main>} />
-  )
+  createRoutesFromElements(<Route path="/" element={<Index />} />),
 );
 
 function App() {
