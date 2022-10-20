@@ -7,26 +7,42 @@ import { PrismaService } from './../prisma/prisma.service';
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  create(createUserDto: CreateUserDto) {
-    return this.prisma.user.create({ data: createUserDto });
+  async create(createUserDto: CreateUserDto) {
+    return await this.prisma.user.create({ data: createUserDto });
   }
 
-  findAll() {
-    return this.prisma.user.findMany();
+  async findAll() {
+    return await this.prisma.user.findMany();
   }
 
-  findOne(id: number) {
-    return this.prisma.user.findUnique({ where: { id: id } });
+  async findOne(id: number) {
+    return await this.prisma.user.findUnique({ where: { id: id } });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return this.prisma.user.update({
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    return await this.prisma.user.update({
       where: { id: id },
       data: updateUserDto,
     });
   }
 
-  remove(id: number) {
-    return this.prisma.user.delete({ where: { id: id } });
+  async remove(id: number) {
+    return await this.prisma.user.delete({ where: { id: id } });
+  }
+
+  async checkUserExists(id: number) {
+    const user = await this.findOne(id);
+    console.log(user);
+
+    if (!user) return false;
+    return true;
+  }
+
+  async checkEmailExists(email: string) {
+    const user = await this.prisma.user.findFirst({ where: { email: email } });
+    console.log(user);
+
+    if (!user) return false;
+    return true;
   }
 }
