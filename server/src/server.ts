@@ -1,4 +1,5 @@
 import Hapi from '@hapi/hapi'
+import { start } from 'repl'
 
 const server: Hapi.Server = Hapi.server({
     port: process.env.PORT || 3000,
