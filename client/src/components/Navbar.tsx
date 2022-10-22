@@ -1,4 +1,8 @@
-import { MagnifyingGlassIcon, PencilIcon } from '@heroicons/react/24/outline';
+import {
+  MagnifyingGlassIcon,
+  PencilIcon,
+  Bars3Icon,
+} from '@heroicons/react/24/outline';
 import Button from './Button';
 
 const Navbar = () => {
@@ -12,19 +16,7 @@ const Navbar = () => {
       <div className="navbar-end">
         <div className="dropdown lg:hidden w-full flex justify-end">
           <button className="btn btn-square btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              className="inline-block w-5 h-5 stroke-current"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              ></path>
-            </svg>
+            <Bars3Icon />
           </button>
           <ul
             tabIndex={0}
