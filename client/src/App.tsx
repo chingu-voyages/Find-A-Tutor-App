@@ -4,13 +4,15 @@ import {
   createRoutesFromElements,
   Route,
 } from 'react-router-dom';
-import RootLayout from './components/RootLayout';
-import Index from './pages';
+import Index from './pages/index';
+import Home from './pages/Home';
+import Register from './pages/Register';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<RootLayout />}>
-      <Route index={true} element={<Index />} />
+    <Route path="/" element={<Index />}>
+      <Route index element={<Home />} />
+      <Route path="account/register" element={<Register />} />
     </Route>,
   ),
 );
