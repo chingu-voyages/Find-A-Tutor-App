@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik, Form, FormikHelpers } from 'formik';
 import TextInput from '../components/common/TextInput';
 import { RegisterSchema } from '../utils/schemas';
+import Button from '../components/Button';
 export interface RegisterFormValues {
   firstName: string;
   lastName: string;
@@ -12,7 +13,7 @@ export interface RegisterFormValues {
 function Register() {
   return (
     <>
-      <div className="card w-96 bg-base-100 shadow-xl">
+      <div className="card w-full md:w-96 rounded-none md:rounded bg-secondary md:bg-base-100 md:shadow-xl">
         <Formik
           initialValues={{
             firstName: '',
@@ -50,8 +51,9 @@ function Register() {
               placeholder="password"
               type="password"
             />
-            <div className="card-actions self-center">
-              <button className="btn btn-primary text-neutral">Submit</button>
+            <div className="card-actions md:self-center">
+              {/* <button className="btn btn-primary text-neutral">Submit</button> */}
+              <Button text="Submit" custom={[]} />
             </div>
           </Form>
         </Formik>
