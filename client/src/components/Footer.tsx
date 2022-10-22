@@ -34,7 +34,7 @@ const Footer = () => {
           </div>
         </div>
       </footer>
-      <footer className="w-full p-8 pt-0 text-md lg:px-10 lg:py-4 text-base-content">
+      <footer className="w-full p-8 pt-0 text-md lg:px-10 lg:py-4 text-base-content lg:text-center">
         <p>
           (App Name) is a web app created by a team of volunteers from Chingu,
           using (Tech Stack). Click{' '}
