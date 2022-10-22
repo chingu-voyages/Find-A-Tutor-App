@@ -8,7 +8,7 @@ const Button = ({ text, custom }: Props) => {
 
   return (
     <button
-      className={`btn btn-primary h-min normal-case text-neutral px-6 text-lg ${classes}`}
+      className={`btn btn-primary normal-case text-neutral px-6 py-2 text-md w-full lg:text-lg lg:w-auto lg:py-1 min-h-min h-min ${classes}`}
     >
       {text}
     </button>
