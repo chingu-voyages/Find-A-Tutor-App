@@ -43,7 +43,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="hidden lg:flex">
-          <ul className="flex items-center gap-6 mr-6 text-xl underline underline-offset-[6px] font-semibold">
+          <ul className="flex items-center gap-6 mr-10 text-xl underline underline-offset-[6px] font-semibold">
             <li className="hover:text-secondary">
               <a href="#">Find a Tutor</a>
             </li>
@@ -51,7 +51,7 @@ const Navbar = () => {
               <a href="#">Start Tutoring</a>
             </li>
           </ul>
-          <Button text="Log In" custom={['mr-6']} />
+          <Button text="Log In" custom={['mr-4']} />
           <Button text="Sign Up" custom={[]} />
         </div>
       </div>
