@@ -17,9 +17,10 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   
-  email    String @unique 
   firstName String 
   lastName String
+  email    String @unique 
+  password String
   // post POST[]
   profile Profile?
   role Role @default(STUDENT)
