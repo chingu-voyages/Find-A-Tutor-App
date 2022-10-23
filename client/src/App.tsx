@@ -4,13 +4,16 @@ import {
   createRoutesFromElements,
   Route,
 } from 'react-router-dom';
-// import Index, { loader as userLoader } from './pages';
-import Index from './pages';
+import Index from './pages/index';
+import Home from './pages/Home';
+import Register from './pages/Register';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    // <Route path="/" element={<Index />} loader={userLoader} />,
-    <Route path="/" element={<Index />} />,
+    <Route path="/" element={<Index />}>
+      <Route index element={<Home />} />
+      <Route path="account/register" element={<Register />} />
+    </Route>,
   ),
 );
 
