@@ -7,6 +7,7 @@ const PORT = 8080;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api');
+  app.enableCors({ origin: 'http://localhost:3000' });
 
   const config = new DocumentBuilder()
     .setTitle('bears-db')
@@ -15,7 +16,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('/', app, document);
+  SwaggerModule.setup('/api/doc', app, document);
 
   await app.listen(PORT);
 }
