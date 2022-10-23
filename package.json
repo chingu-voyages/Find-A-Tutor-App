@@ -12,7 +12,8 @@
     "lint:frontend": "cd client && npm run lint:staged",
     "prod:build:client": "cd ./client && npm run build && cp -Tr dist ../server/dist_client && rm -rf dist",
     "prod:build:server": "cd ./server && npm run build",
-    "prod:build": "npm-run-all install prod:build:client prod:build:server",
+    "dev:build": "npm-run-all install prod:build:client prod:build:server",
+    "prod:build": "npm run prod:build:client && npm run prod:build:server",
     "prod:start": "cd ./server && npm run start:prod"
   },
   "repository": {
