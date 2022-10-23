@@ -1,3 +1,19 @@
+import { Outlet } from 'react-router-dom';
+
+function Index() {
+  return (
+    <>
+      <p>Navbar</p>
+      <div className="w-screen h-full flex flex-col justify-center items-center">
+        <Outlet />
+      </div>
+      <p>Footer</p>
+    </>
+  );
+}
+
+export default Index;
+
 // import { useEffect } from 'react';
 // import { useSelector } from 'react-redux';
 // import { TypedUseSelectorHook } from 'react-redux';
@@ -33,18 +49,3 @@
 //           <p key={index}>{user.name}</p>
 //         ))}
 //     </div>
-import { Outlet } from 'react-router-dom';
-
-function Index() {
-  return (
-    <>
-      <p>Navbar</p>
-      <div className="w-screen h-full flex flex-col justify-center items-center">
-        <Outlet />
-      </div>
-      <p>Footer</p>
-    </>
-  );
-}
-
-export default Index;
