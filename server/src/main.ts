@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
-const PORT = 8080;
+const PORT = process.env.PORT ? parseInt(process.env.PORT) : 8080;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
