@@ -20,6 +20,7 @@
     "*.js": "eslint --cache --fix"
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.12",
     "@reduxjs/toolkit": "^1.8.6",
     "@types/react-redux": "^7.1.24",
     "@types/redux": "^3.6.0",
