@@ -53,7 +53,7 @@ function Register() {
             />
             <div className="card-actions md:self-center">
               {/* <button className="btn btn-primary text-neutral">Submit</button> */}
-              <Button text="Submit" custom={[]} />
+              <Button text="Submit" />
             </div>
           </Form>
         </Formik>

@@ -1,10 +1,10 @@
 type Props = {
   text: string;
-  custom: string[];
+  custom?: string[];
 };
 
 const Button = ({ text, custom }: Props) => {
-  const classes = custom.join(' ');
+  const classes = custom && custom.join(' ');
 
   return (
     <button
