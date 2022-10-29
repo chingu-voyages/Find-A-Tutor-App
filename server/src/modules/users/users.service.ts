@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { PrismaService } from './../prisma/prisma.service';
+import { PrismaService } from './../../prisma/prisma.service';
 
 @Injectable()
 export class UsersService {
@@ -32,17 +32,15 @@ export class UsersService {
 
   async checkUserExists(id: number) {
     const user = await this.findOne(id);
-    console.log(user);
 
     if (!user) return false;
-    return true;
+    return user;
   }
 
   async checkEmailExists(email: string) {
     const user = await this.prisma.user.findFirst({ where: { email: email } });
-    console.log(user);
 
     if (!user) return false;
-    return true;
+    return user;
   }
 }
