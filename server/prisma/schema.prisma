@@ -27,10 +27,12 @@ model User {
 }
 
 model Profile {
-  id     Int    @id @default(autoincrement())
-  age Int 
-  bio    String?
-  contactInfo String
+  id          Int    @id @default(autoincrement())
+  age         Int? 
+  bio         String?
+  subjects    String?
+  rate        Int?
+  phone       String?
   user   User   @relation(fields: [userId], references: [id])
   userId Int    @unique
 }

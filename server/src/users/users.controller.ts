@@ -71,6 +71,42 @@ export class UsersController {
     });
   }
 
+  @Get('students')
+  @ApiOkResponse({ type: UserOkResponseEntityArray })
+  async findAllStudents(
+    @Res()
+    res: Response,
+  ) {
+    const students = await this.usersService.findAllStudents();
+
+    if (!students.length) {
+      throw new NotFoundException('No students found');
+    }
+
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: students,
+    });
+  }
+
+  @Get('tutors')
+  @ApiOkResponse({ type: UserOkResponseEntityArray })
+  async findAllTutors(
+    @Res()
+    res: Response,
+  ) {
+    const tutors = await this.usersService.findAllTutors();
+
+    if (!tutors.length) {
+      throw new NotFoundException('No tutors found');
+    }
+
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: tutors,
+    });
+  }
+
   @Patch(':id')
   @ApiOkResponse({ type: UserOkResponseEntity })
   async update(
