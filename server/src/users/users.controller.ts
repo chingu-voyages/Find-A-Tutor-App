@@ -56,21 +56,6 @@ export class UsersController {
     });
   }
 
-  @Get(':id')
-  @ApiOkResponse({ type: UserOkResponseEntity })
-  async findOne(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
-    const user = await this.usersService.findOne(id);
-
-    if (!user) {
-      throw new NotFoundException(`User with id: ${id} not found`);
-    }
-
-    return res.status(HttpStatus.OK).json({
-      statusCode: HttpStatus.OK,
-      data: user,
-    });
-  }
-
   @Get('students')
   @ApiOkResponse({ type: UserOkResponseEntityArray })
   async findAllStudents(
@@ -104,6 +89,21 @@ export class UsersController {
     return res.status(HttpStatus.OK).json({
       statusCode: HttpStatus.OK,
       data: tutors,
+    });
+  }
+
+  @Get(':id')
+  @ApiOkResponse({ type: UserOkResponseEntity })
+  async findOne(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
+    const user = await this.usersService.findOne(id);
+
+    if (!user) {
+      throw new NotFoundException(`User with id: ${id} not found`);
+    }
+
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: user,
     });
   }
 

@@ -7,23 +7,30 @@ import { PrismaService } from './../prisma/prisma.service';
 export class ProfilesService {
   constructor(private prisma: PrismaService) {}
 
-  create(createProfileDto: CreateProfileDto) {
-    return this.prisma.profile.create({ data: createProfileDto });
+  async create(createProfileDto: CreateProfileDto) {
+    return await this.prisma.profile.create({ data: createProfileDto });
   }
 
-  findAll() {
-    return `This action returns all profiles`;
+  async findAll() {
+    return await this.prisma.profile.findMany({ include: { user: true } });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} profile`;
+  async findOne(id: number) {
+    return await this.prisma.profile.findUnique({
+      where: { userId: id },
+      include: { user: true },
+    });
   }
 
-  update(id: number, updateProfileDto: UpdateProfileDto) {
-    return `This action updates a #${id} profile`;
+  async update(id: number, updateProfileDto: UpdateProfileDto) {
+    return await this.prisma.profile.update({
+      where: { userId: id },
+      data: updateProfileDto,
+      include: { user: true },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} profile`;
+  async remove(id: number) {
+    return await this.prisma.profile.delete({ where: { userId: id } });
   }
 }
