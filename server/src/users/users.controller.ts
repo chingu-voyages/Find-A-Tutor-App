@@ -40,10 +40,7 @@ export class UsersController {
 
   @Get()
   @ApiOkResponse({ type: UserOkResponseEntityArray })
-  async findAll(
-    @Res()
-    res: Response,
-  ) {
+  async findAll(@Res() res: Response) {
     const users = await this.usersService.findAll();
 
     if (!users.length) {
@@ -58,10 +55,7 @@ export class UsersController {
 
   @Get('students')
   @ApiOkResponse({ type: UserOkResponseEntityArray })
-  async findAllStudents(
-    @Res()
-    res: Response,
-  ) {
+  async findAllStudents(@Res() res: Response) {
     const students = await this.usersService.findAllStudents();
 
     if (!students.length) {
@@ -76,10 +70,7 @@ export class UsersController {
 
   @Get('tutors')
   @ApiOkResponse({ type: UserOkResponseEntityArray })
-  async findAllTutors(
-    @Res()
-    res: Response,
-  ) {
+  async findAllTutors(@Res() res: Response) {
     const tutors = await this.usersService.findAllTutors();
 
     if (!tutors.length) {
