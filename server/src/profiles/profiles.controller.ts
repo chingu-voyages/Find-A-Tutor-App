@@ -16,13 +16,20 @@ import { ProfilesService } from './profiles.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ProfileCreatedResponseEntity } from './entities/profileCreatedResponse.entity';
+import {
+  ProfileOkResponseEntity,
+  ProfileOkResponseEntityArray,
+} from './entities/profileOkResponse.entity';
 
 @Controller('profiles')
 @ApiTags('profiles')
 export class ProfilesController {
   constructor(private readonly profilesService: ProfilesService) {}
 
+  // profile creation should be done through user creation
   @Post()
+  @ApiCreatedResponse({ type: ProfileCreatedResponseEntity })
   async create(
     @Body() createProfileDto: CreateProfileDto,
     @Res() res: Response,
@@ -36,6 +43,7 @@ export class ProfilesController {
   }
 
   @Get()
+  @ApiOkResponse({ type: ProfileOkResponseEntityArray })
   async findAll(@Res() res: Response) {
     const profiles = await this.profilesService.findAll();
 
@@ -50,6 +58,7 @@ export class ProfilesController {
   }
 
   @Get(':id')
+  @ApiOkResponse({ type: ProfileOkResponseEntity })
   async findOne(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
     const profile = await this.profilesService.findOne(id);
 
@@ -66,6 +75,7 @@ export class ProfilesController {
   }
 
   @Patch(':id')
+  @ApiOkResponse({ type: ProfileOkResponseEntity })
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateProfileDto: UpdateProfileDto,
@@ -82,7 +92,9 @@ export class ProfilesController {
     });
   }
 
+  // profile deletion should be done through user deletion
   @Delete(':id')
+  @ApiOkResponse({ type: ProfileOkResponseEntity })
   async remove(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
     const removedProfile = await this.profilesService.remove(id);
 

@@ -20,7 +20,7 @@ import {
   UserOkResponseEntity,
   UserOkResponseEntityArray,
 } from './entities/userOkResponse.entity';
-import { UserCreatedResponseEntity } from './entities/UserCreatedResponse.entity';
+import { UserCreatedResponseEntity } from './entities/userCreatedResponse.entity';
 
 @Controller('users')
 @ApiTags('users')

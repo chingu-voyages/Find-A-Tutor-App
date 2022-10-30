@@ -2,23 +2,23 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateProfileDto {
   @ApiProperty({ required: false, nullable: true })
-  age?: number;
+  age?: number | null;
 
   @ApiProperty({ required: false, nullable: true })
-  bio?: string;
+  bio?: string | null;
 
   @ApiProperty({ required: false, nullable: true })
-  subjects?: string;
+  subjects?: string | null;
 
   @ApiProperty({ required: false, nullable: true })
-  rate?: number;
+  rate?: number | null;
 
   @ApiProperty({ required: false, nullable: true })
-  phone?: string;
+  phone?: string | null;
 
   @ApiProperty({ required: false, nullable: true })
-  city?: string;
+  city?: string | null;
 
   @ApiProperty({ required: false, nullable: true })
-  state?: string;
+  state?: string | null;
 }
