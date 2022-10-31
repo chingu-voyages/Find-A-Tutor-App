@@ -6,6 +6,9 @@ module.exports = {
       fontFamily: {
         primary: ['Inter', 'sans-serif'],
       },
+      screens: {
+        short: { raw: '(max-height:1000px)' },
+      },
     },
   },
   plugins: [require('@tailwindcss/typography'), require('daisyui')],
