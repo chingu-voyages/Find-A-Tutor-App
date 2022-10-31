@@ -54,9 +54,10 @@ export class UsersService {
   }
 
   async remove(id: number) {
-    await this.prisma.profile.delete({ where: { userId: id } });
+    // await this.prisma.profile.delete({ where: { userId: id } });
     return await this.prisma.user.delete({
       where: { id: id },
+      include: { profile: true },
     });
   }
 
