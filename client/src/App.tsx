@@ -8,11 +8,13 @@ import Index from './pages/index';
 import Register from './pages/Register';
 import RootLayout from './components/RootLayout';
 import ErrorPage from './pages/ErrorPage';
+import Profile from './pages/Profile';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" errorElement={<ErrorPage />} element={<RootLayout />}>
       <Route index element={<Index />} />
+      <Route path="account" element={<Profile />} />
       <Route path="account/register" element={<Register />} />
     </Route>,
   ),
