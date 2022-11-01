@@ -1,17 +1,17 @@
 import {
-    Controller,
-    Get,
-    Post,
-    Body,
-    Patch,
-    Param,
-    Delete,
-    NotFoundException,
-    Res,
-    HttpStatus,
-    ParseIntPipe,
-    HttpException,
-    UnauthorizedException
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  NotFoundException,
+  Res,
+  HttpStatus,
+  ParseIntPipe,
+  HttpException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { UsersService } from '../users/users.service';
@@ -20,66 +20,82 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { SignInUserDto } from './dto/signin-user.dto';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UserCreatedResponseEntity } from './entities/UserCreatedResponse.entity';
-import { SignInResponseEntity } from './entities/SignInResponse.entity'
+import { SignInResponseEntity } from './entities/SignInResponse.entity';
 import { JwtService } from '@nestjs/jwt';
-
-
+import * as bcrypt from 'bcrypt';
 
 export interface UserJwtPayload {
-    username: string;
-    typeid: number;
+  email: string;
+  userId: number;
 }
 
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
-    constructor(private readonly usersService: UsersService, private jwtService: JwtService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private jwtService: JwtService,
+    private authService: AuthService,
+  ) {}
 
-    @Post('create')
-    @ApiCreatedResponse({ type: UserCreatedResponseEntity })
-    async create(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
-        const createdUser = await this.usersService.create(createUserDto);
+  // return user and jwt for signin and signup
 
-        console.log(createdUser)
+  @Post('signup')
+  @ApiCreatedResponse({ type: UserCreatedResponseEntity })
+  async create(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
+    const createdUser = await this.authService.create(createUserDto);
 
-        return res.status(HttpStatus.CREATED).json({
-            statusCode: HttpStatus.CREATED,
-            data: createdUser,
-        });
+    // console.log(createdUser);
+
+    const { id: userId, role, email } = createdUser;
+
+    if (createdUser) {
+      const typeid = createdUser.id;
+      const payload: UserJwtPayload = { email, userId };
+      const token: string = await this.jwtService.sign(payload);
+      // console.log(token);
+      return res.status(HttpStatus.CREATED).json({
+        statusCode: HttpStatus.CREATED,
+        data: { user: { id: userId, role, email }, token },
+      });
+    } else {
+      throw new UnauthorizedException('Incorrect login credentials!');
+    }
+  }
+
+  @Post('signin')
+  @ApiCreatedResponse({ type: SignInResponseEntity })
+  async signin(@Body() signInUserDto: SignInUserDto, @Res() res: Response) {
+    const user: any = await this.usersService.findUserByEmail(
+      signInUserDto.email,
+    );
+
+    if (!user) {
+      throw new HttpException('invalid_credentials', HttpStatus.UNAUTHORIZED);
     }
 
-    @Post('signin')
-    @ApiCreatedResponse({ type: SignInResponseEntity })
-    async signin(@Body() signInUserDto: SignInUserDto):Promise<{ accessMessage: string }>  {
-        const user: any = await this.usersService.checkEmailExists(signInUserDto.email)
+    const { password, role, email  } = user;
 
-        // const { password } = user
+    bcrypt.compare(signInUserDto.password, password, function (err, result) {
+      if (err) {
+        console.log(err);
+      }
+      if (result) {
+        return true;
+      }
+    });
 
-        const username = signInUserDto.email
-
-        // bcrypt.compare(signInUserDto.password, password, function(err, result) {
-        //     if(err) {
-        //         console.log(err);
-        //     }
-        //     if(result) {
-        //         return true
-        //     }
-        // });
-
-        if (!user) {
-            throw new HttpException("invalid_credentials",  
-                HttpStatus.UNAUTHORIZED);
-        }
-
-
-        if (user) {
-            const typeid = user.id;
-            const payload: UserJwtPayload = { username, typeid };
-            const accessMessage: string = await this.jwtService.sign(payload);
-            // console.log(accessMessage)
-            return { accessMessage } ;
-        } else {
-            throw new UnauthorizedException('Incorrect login credentials!');
-        }
+    if (user) {
+      const userId = user.id;
+      const payload: UserJwtPayload = { email, userId };
+      const token: string = await this.jwtService.sign(payload);
+    //   console.log(token);
+      return res.status(HttpStatus.ACCEPTED).json({
+        statusCode: HttpStatus.ACCEPTED,
+        data: { user: { id: userId, role, email }, token },
+      });
+    } else {
+      throw new UnauthorizedException('Incorrect login credentials!');
     }
+  }
 }
