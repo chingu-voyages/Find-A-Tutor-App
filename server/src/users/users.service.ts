@@ -8,15 +8,42 @@ export class UsersService {
   constructor(private prisma: PrismaService) {}
 
   async create(createUserDto: CreateUserDto) {
-    return await this.prisma.user.create({ data: createUserDto });
+    return await this.prisma.user.create({
+      data: {
+        ...createUserDto,
+        profile: {
+          create: createUserDto.profile,
+        },
+      },
+      include: {
+        profile: true,
+      },
+    });
   }
 
   async findAll() {
-    return await this.prisma.user.findMany();
+    return await this.prisma.user.findMany({ include: { profile: true } });
   }
 
   async findOne(id: number) {
-    return await this.prisma.user.findUnique({ where: { id: id } });
+    return await this.prisma.user.findUnique({
+      where: { id: id },
+      include: { profile: true },
+    });
+  }
+
+  async findAllStudents() {
+    return await this.prisma.user.findMany({
+      where: { role: 'STUDENT' },
+      include: { profile: true },
+    });
+  }
+
+  async findAllTutors() {
+    return await this.prisma.user.findMany({
+      where: { role: 'TUTOR' },
+      include: { profile: true },
+    });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
@@ -27,22 +54,14 @@ export class UsersService {
   }
 
   async remove(id: number) {
-    return await this.prisma.user.delete({ where: { id: id } });
+    // await this.prisma.profile.delete({ where: { userId: id } });
+    return await this.prisma.user.delete({
+      where: { id: id },
+      include: { profile: true },
+    });
   }
 
-  async checkUserExists(id: number) {
-    const user = await this.findOne(id);
-    console.log(user);
-
-    if (!user) return false;
-    return true;
-  }
-
-  async checkEmailExists(email: string) {
-    const user = await this.prisma.user.findFirst({ where: { email: email } });
-    console.log(user);
-
-    if (!user) return false;
-    return true;
+  async findUserByEmail(email: string) {
+    return await this.prisma.user.findFirst({ where: { email: email } });
   }
 }

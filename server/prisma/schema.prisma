@@ -13,26 +13,30 @@ datasource db {
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   
-  firstName String 
-  lastName String
-  email    String @unique 
-  password String
+  firstName   String 
+  lastName    String
+  email       String @unique 
+  password    String
   // post POST[]
-  profile Profile?
-  role Role @default(STUDENT)
+  profile     Profile?
+  role        Role @default(STUDENT)
 }
 
 model Profile {
-  id     Int    @id @default(autoincrement())
-  age Int 
-  bio    String?
-  contactInfo String
-  user   User   @relation(fields: [userId], references: [id])
-  userId Int    @unique
+  id          Int    @id @default(autoincrement())
+  age         Int? 
+  bio         String?
+  subjects    String?
+  rate        Decimal?
+  phone       String?
+  city        String?
+  state       String?
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int    @unique
 }
 
 enum Role {
