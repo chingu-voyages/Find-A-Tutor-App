@@ -20,7 +20,7 @@ import {
   UserOkResponseEntity,
   UserOkResponseEntityArray,
 } from './entities/userOkResponse.entity';
-import { UserCreatedResponseEntity } from './entities/UserCreatedResponse.entity';
+import { UserCreatedResponseEntity } from './entities/userCreatedResponse.entity';
 
 @Controller('users')
 @ApiTags('users')
@@ -40,10 +40,7 @@ export class UsersController {
 
   @Get()
   @ApiOkResponse({ type: UserOkResponseEntityArray })
-  async findAll(
-    @Res()
-    res: Response,
-  ) {
+  async findAll(@Res() res: Response) {
     const users = await this.usersService.findAll();
 
     if (!users.length) {
@@ -53,6 +50,36 @@ export class UsersController {
     return res.status(HttpStatus.OK).json({
       statusCode: HttpStatus.OK,
       data: users,
+    });
+  }
+
+  @Get('students')
+  @ApiOkResponse({ type: UserOkResponseEntityArray })
+  async findAllStudents(@Res() res: Response) {
+    const students = await this.usersService.findAllStudents();
+
+    if (!students.length) {
+      throw new NotFoundException('No students found');
+    }
+
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: students,
+    });
+  }
+
+  @Get('tutors')
+  @ApiOkResponse({ type: UserOkResponseEntityArray })
+  async findAllTutors(@Res() res: Response) {
+    const tutors = await this.usersService.findAllTutors();
+
+    if (!tutors.length) {
+      throw new NotFoundException('No tutors found');
+    }
+
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: tutors,
     });
   }
 
