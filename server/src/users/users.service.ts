@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { PrismaService } from './../../prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class UsersService {
@@ -37,7 +37,7 @@ export class UsersService {
     return user;
   }
 
-  async checkEmailExists(email: string) {
+  async findUserByEmail(email: string) {
     const user = await this.prisma.user.findFirst({ where: { email: email } });
 
     if (!user) return false;
