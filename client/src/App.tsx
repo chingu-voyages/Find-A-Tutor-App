@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import RootLayout from './components/RootLayout';
 import ErrorPage from './pages/ErrorPage';
 import Profile from './pages/Profile';
+import Login from './pages/Login';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -16,6 +17,7 @@ const router = createBrowserRouter(
       <Route index element={<Index />} />
       <Route path="account" element={<Profile />} />
       <Route path="account/register" element={<Register />} />
+      <Route path="account/login" element={<Login />} />
     </Route>,
   ),
 );
