@@ -15,12 +15,6 @@ export class UserEntity implements User {
   email: string;
 
   @ApiProperty()
-  firstName: string;
-
-  @ApiProperty()
-  lastName: string;
-
-  @ApiProperty()
   password: string;
 
   @ApiProperty({ required: false, nullable: true })

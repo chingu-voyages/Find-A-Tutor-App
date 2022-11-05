@@ -16,7 +16,7 @@ import {
 import { Response } from 'express';
 import { UsersService } from '../users/users.service';
 import { AuthService } from './auth.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto } from './../users/dto/create-user.dto';
 import { SignInUserDto } from './dto/signin-user.dto';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UserCreatedResponseEntity } from './entities/UserCreatedResponse.entity';
@@ -74,7 +74,7 @@ export class AuthController {
       throw new HttpException('invalid_credentials', HttpStatus.UNAUTHORIZED);
     }
 
-    const { password, role, email  } = user;
+    const { password, role, email } = user;
 
     bcrypt.compare(signInUserDto.password, password, function (err, result) {
       if (err) {
@@ -89,7 +89,7 @@ export class AuthController {
       const userId = user.id;
       const payload: UserJwtPayload = { email, userId };
       const token: string = await this.jwtService.sign(payload);
-    //   console.log(token);
+      //   console.log(token);
       return res.status(HttpStatus.ACCEPTED).json({
         statusCode: HttpStatus.ACCEPTED,
         data: { user: { id: userId, role, email }, token },

@@ -5,6 +5,12 @@ export class ProfileEntity implements Profile {
   @ApiProperty()
   id: number;
 
+  @ApiProperty()
+  firstName: string;
+
+  @ApiProperty()
+  lastName: string;
+
   @ApiProperty({ required: false, nullable: true })
   age: number | null;
 
@@ -13,6 +19,12 @@ export class ProfileEntity implements Profile {
 
   @ApiProperty({ required: false, nullable: true })
   subjects: string | null;
+
+  @ApiProperty({ required: false, nullable: true })
+  edLevel: string | null;
+
+  @ApiProperty({ required: false, nullable: true })
+  profileUrl: string | null;
 
   @ApiProperty({ required: false, nullable: true })
   rate: Prisma.Decimal | null;

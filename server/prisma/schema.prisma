@@ -2,42 +2,54 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
   referentialIntegrity = "prisma"
 }
 
 model User {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
-  firstName   String 
-  lastName    String
-  email       String @unique 
-  password    String
-  // post POST[]
-  profile     Profile?
-  role        Role @default(STUDENT)
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email    String   @unique
+  password String
+  profile  Profile?
+  role     Role     @default(STUDENT)
 }
 
 model Profile {
-  id          Int    @id @default(autoincrement())
-  age         Int? 
-  bio         String?
-  subjects    String?
-  rate        Decimal?
-  phone       String?
-  city        String?
-  state       String?
-  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      Int    @unique
+  id         Int      @id @default(autoincrement())
+  firstName  String
+  lastName   String
+  age        Int?
+  bio        String?
+  subjects   String?
+  edLevel    String?
+  rate       Decimal?
+  phone      String?
+  city       String?
+  state      String?
+  profileUrl String?  @default("https://placeimg.com/192/192/people")
+  // review    Review[]
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int      @unique
 }
+
+// model Review {
+//   id        Int     @id @default(autoincrement())
+//   text      String
+//   rating    Int
+//   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+//   profileId Int     @unique
+//   user User Profile @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   userId Int
+// }
 
 enum Role {
   TUTOR

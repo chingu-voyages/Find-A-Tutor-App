@@ -2,6 +2,12 @@ import { ApiProperty } from '@nestjs/swagger';
 import { User } from '@prisma/client';
 
 export class CreateProfileDto {
+  @ApiProperty()
+  firstName: string;
+
+  @ApiProperty()
+  lastName: string;
+
   @ApiProperty({ required: false, nullable: true })
   age?: number;
 

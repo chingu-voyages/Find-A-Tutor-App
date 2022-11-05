@@ -10,6 +10,7 @@ import {
   Res,
   HttpStatus,
   ParseIntPipe,
+  ConflictException,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { UsersService } from './users.service';
@@ -21,6 +22,7 @@ import {
   UserOkResponseEntityArray,
 } from './entities/userOkResponse.entity';
 import { UserCreatedResponseEntity } from './entities/userCreatedResponse.entity';
+import * as bcrypt from 'bcrypt';
 
 @Controller('users')
 @ApiTags('users')
@@ -30,6 +32,20 @@ export class UsersController {
   @Post()
   @ApiCreatedResponse({ type: UserCreatedResponseEntity })
   async create(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
+    const userExists = await this.usersService.findUserByEmail(
+      createUserDto.email,
+    );
+
+    if (userExists) {
+      throw new ConflictException('this email already exists');
+    }
+
+    const saltRounds = 10;
+    createUserDto.password = await bcrypt.hash(
+      createUserDto.password,
+      saltRounds,
+    );
+
     const createdUser = await this.usersService.create(createUserDto);
 
     return res.status(HttpStatus.CREATED).json({
