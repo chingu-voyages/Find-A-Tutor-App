@@ -41,7 +41,7 @@ export class UsersController {
     }
 
     const saltRounds = 10;
-    createUserDto.password = await bcrypt.hash(
+    createUserDto.password = bcrypt.hashSync(
       createUserDto.password,
       saltRounds,
     );
