@@ -21,7 +21,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "db:docker:up": "docker compose up -d",
-    "db:docker:down": "docker compose down"
+    "db:docker:down": "docker compose down",
+    "purge": "npx ts-node src/prisma/purge.ts"
   },
   "lint-staged": {
     "src/**/*.+(ts)": [
@@ -75,7 +76,7 @@
     "supertest": "^6.1.3",
     "ts-jest": "28.0.8",
     "ts-loader": "^9.2.3",
-    "ts-node": "^10.0.0",
+    "ts-node": "^10.9.1",
     "tsconfig-paths": "4.1.0",
     "typescript": "^4.7.4"
   },
