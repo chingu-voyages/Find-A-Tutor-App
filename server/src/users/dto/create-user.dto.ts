@@ -13,6 +13,7 @@ import {
   IsString,
   IsUrl,
   MaxLength,
+  Min,
   MinLength,
   Validate,
   ValidateNested,
@@ -42,6 +43,7 @@ class PartialProfile {
 
   @IsOptional()
   @IsNumber()
+  @Min(1)
   @ApiProperty({ required: false, nullable: true })
   age?: number;
 
@@ -62,6 +64,7 @@ class PartialProfile {
 
   @IsOptional()
   @IsNumber()
+  @Min(0)
   @ApiProperty()
   rate?: number;
 
