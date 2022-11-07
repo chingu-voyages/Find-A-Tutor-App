@@ -45,44 +45,44 @@ class PartialProfile {
   @IsNumber()
   @Min(1)
   @ApiProperty({ required: false, nullable: true })
-  age?: number;
+  age?: number | null;
 
   @IsOptional()
   @IsString()
   @ApiProperty({ required: false, nullable: true })
-  bio?: string;
+  bio?: string | null;
 
   @IsOptional()
   @IsString()
   @ApiProperty({ required: false, nullable: true })
-  subjects?: string;
+  subjects?: string | null;
 
   @IsOptional()
   @IsString()
   @ApiProperty({ required: false, nullable: true })
-  edLevel?: string;
+  edLevel?: string | null;
 
   @IsOptional()
   @IsNumber()
   @Min(0)
   @ApiProperty()
-  rate?: number;
+  rate?: number | null;
 
   @IsOptional()
   @IsString()
   @IsPhoneNumber('US')
   @ApiProperty({ required: false, nullable: true })
-  phone?: string;
+  phone?: string | null;
 
   @IsOptional()
   @IsString()
   @ApiProperty({ required: false, nullable: true })
-  city?: string;
+  city?: string | null;
 
   @IsOptional()
   @IsString()
   @ApiProperty({ required: false, nullable: true })
-  state?: string;
+  state?: string | null;
 
   @IsOptional()
   @IsString()
@@ -92,7 +92,7 @@ class PartialProfile {
     nullable: true,
     default: 'https://placeimg.com/192/192/people',
   })
-  profileUrl?: string;
+  profileUrl?: string | null;
 }
 
 export class CreateUserDto {

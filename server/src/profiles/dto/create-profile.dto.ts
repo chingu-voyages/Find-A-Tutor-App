@@ -1,34 +1,75 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { User } from '@prisma/client';
+import {
+  IsNotEmpty,
+  IsString,
+  IsOptional,
+  IsNumber,
+  Min,
+  IsPhoneNumber,
+  IsUrl,
+} from 'class-validator';
 
 export class CreateProfileDto {
+  @IsNotEmpty()
+  @IsString()
   @ApiProperty()
   firstName: string;
 
+  @IsNotEmpty()
+  @IsString()
   @ApiProperty()
   lastName: string;
 
+  @IsOptional()
+  @IsNumber()
+  @Min(1)
   @ApiProperty({ required: false, nullable: true })
-  age?: number;
+  age?: number | null;
 
+  @IsOptional()
+  @IsString()
   @ApiProperty({ required: false, nullable: true })
-  bio?: string;
+  bio?: string | null;
 
+  @IsOptional()
+  @IsString()
   @ApiProperty({ required: false, nullable: true })
-  subjects?: string;
+  subjects?: string | null;
 
+  @IsOptional()
+  @IsString()
   @ApiProperty({ required: false, nullable: true })
-  rate?: number;
+  edLevel?: string | null;
 
-  @ApiProperty({ required: false, nullable: true })
-  phone?: string;
-
-  @ApiProperty({ required: false, nullable: true })
-  city?: string;
-
-  @ApiProperty({ required: false, nullable: true })
-  state?: string;
-
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
   @ApiProperty()
-  user: User;
+  rate?: number | null;
+
+  @IsOptional()
+  @IsString()
+  @IsPhoneNumber('US')
+  @ApiProperty({ required: false, nullable: true })
+  phone?: string | null;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty({ required: false, nullable: true })
+  city?: string | null;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty({ required: false, nullable: true })
+  state?: string | null;
+
+  @IsOptional()
+  @IsString()
+  @IsUrl()
+  @ApiProperty({
+    required: false,
+    nullable: true,
+    default: 'https://placeimg.com/192/192/people',
+  })
+  profileUrl?: string | null;
 }

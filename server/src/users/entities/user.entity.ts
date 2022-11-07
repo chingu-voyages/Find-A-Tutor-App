@@ -3,7 +3,7 @@ import { Profile, Role, User } from '@prisma/client';
 import { Prisma } from '@prisma/client';
 import { Type } from 'class-transformer';
 
-export class ProfileEntity implements Profile {
+export class UserProfileEntity implements Profile {
   @ApiProperty()
   id: number;
 
@@ -47,7 +47,7 @@ export class ProfileEntity implements Profile {
   @ApiProperty()
   userId: number;
 
-  constructor(partial: Partial<ProfileEntity>) {
+  constructor(partial: Partial<UserProfileEntity>) {
     Object.assign(this, partial);
   }
 }
@@ -71,9 +71,9 @@ export class UserEntity implements User {
   @ApiProperty({ type: String, enum: ['STUDENT', 'TUTOR'] })
   role: Role;
 
-  @Type(() => ProfileEntity)
+  @Type(() => UserProfileEntity)
   @ApiProperty()
-  profile: ProfileEntity;
+  profile: UserProfileEntity;
 
   constructor(partial: Partial<UserEntity>) {
     Object.assign(this, partial);
