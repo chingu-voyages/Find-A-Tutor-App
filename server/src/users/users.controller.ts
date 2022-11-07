@@ -16,11 +16,14 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import {
-  UserOkResponseEntity,
-  UserOkResponseEntityArray,
-  UserOkResponseEntityArrayTutors,
-} from './entities/userOkResponse.entity';
-import { UserCreatedResponseEntity } from './entities/userCreatedResponse.entity';
+  CreateUserEntity,
+  DeleteUserEntity,
+  GetStudentsEntity,
+  GetTutorsEntity,
+  GetUserEntity,
+  GetUsersEntity,
+  UpdateUserEntity,
+} from './entities/user-responses.entity';
 
 @Controller('users')
 @ApiTags('users')
@@ -28,7 +31,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  @ApiCreatedResponse({ type: UserCreatedResponseEntity })
+  @ApiCreatedResponse({ type: CreateUserEntity })
   async create(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
     const createdUser = await this.usersService.create(createUserDto);
 
@@ -39,7 +42,7 @@ export class UsersController {
   }
 
   @Get()
-  @ApiOkResponse({ type: UserOkResponseEntityArray })
+  @ApiOkResponse({ type: GetUsersEntity })
   async findAll(@Res() res: Response) {
     const users = await this.usersService.findAll();
 
@@ -50,7 +53,7 @@ export class UsersController {
   }
 
   @Get('students')
-  @ApiOkResponse({ type: UserOkResponseEntityArray })
+  @ApiOkResponse({ type: GetStudentsEntity })
   async findAllStudents(@Res() res: Response) {
     const students = await this.usersService.findAllStudents();
 
@@ -61,7 +64,7 @@ export class UsersController {
   }
 
   @Get('tutors')
-  @ApiOkResponse({ type: UserOkResponseEntityArrayTutors })
+  @ApiOkResponse({ type: GetTutorsEntity })
   async findAllTutors(@Res() res: Response) {
     const tutors = await this.usersService.findAllTutors();
 
@@ -72,7 +75,7 @@ export class UsersController {
   }
 
   @Get(':id')
-  @ApiOkResponse({ type: UserOkResponseEntity })
+  @ApiOkResponse({ type: GetUserEntity })
   async findOne(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
     const user = await this.usersService.findOne(id);
 
@@ -83,7 +86,7 @@ export class UsersController {
   }
 
   @Patch(':id')
-  @ApiOkResponse({ type: UserOkResponseEntity })
+  @ApiOkResponse({ type: UpdateUserEntity })
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateUserDto: UpdateUserDto,
@@ -98,7 +101,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  @ApiOkResponse({ type: UserOkResponseEntity })
+  @ApiOkResponse({ type: DeleteUserEntity })
   async remove(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
     const removedUser = await this.usersService.remove(id);
 
