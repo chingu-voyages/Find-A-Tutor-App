@@ -1,4 +1,4 @@
-import { UserEntity } from './user.entity';
+import { UserEntity, UserEntityTutor } from './user.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UserOkResponseEntity {
@@ -15,4 +15,12 @@ export class UserOkResponseEntityArray {
 
   @ApiProperty({ type: [UserEntity] })
   data: UserEntity[];
+}
+
+export class UserOkResponseEntityArrayTutors {
+  @ApiProperty({ default: 200 })
+  statusCode: number;
+
+  @ApiProperty({ type: [UserEntityTutor] })
+  data: UserEntityTutor[];
 }

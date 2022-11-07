@@ -6,6 +6,8 @@ import {
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from './../prisma/prisma.service';
+import { UserEntity } from './entities/user.entity';
+import { plainToClass } from 'class-transformer';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -21,7 +23,7 @@ export class UsersService {
 
     createUserDto.password = this.hashPassword(createUserDto.password);
 
-    return await this.prisma.user.create({
+    const createdUser = await this.prisma.user.create({
       data: {
         ...createUserDto,
         profile: {
@@ -32,6 +34,10 @@ export class UsersService {
         profile: true,
       },
     });
+
+    const serializedUser = plainToClass(UserEntity, createdUser);
+
+    return serializedUser;
   }
 
   async findAll() {
@@ -43,7 +49,9 @@ export class UsersService {
       throw new NotFoundException('No users found');
     }
 
-    return users;
+    const serializedUsers = users.map((user) => plainToClass(UserEntity, user));
+
+    return serializedUsers;
   }
 
   async findOne(id: number) {
@@ -56,7 +64,9 @@ export class UsersService {
       throw new NotFoundException(`User with id: ${id} not found`);
     }
 
-    return user;
+    const serializedUser = plainToClass(UserEntity, user);
+
+    return serializedUser;
   }
 
   async findAllStudents() {
@@ -69,7 +79,11 @@ export class UsersService {
       throw new NotFoundException('No students found');
     }
 
-    return students;
+    const serializedStudents = students.map((student) =>
+      plainToClass(UserEntity, student),
+    );
+
+    return serializedStudents;
   }
 
   async findAllTutors() {
@@ -82,7 +96,11 @@ export class UsersService {
       throw new NotFoundException('No tutors found');
     }
 
-    return tutors;
+    const serializedTutors = tutors.map((tutor) =>
+      plainToClass(UserEntity, tutor),
+    );
+
+    return serializedTutors;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
@@ -101,9 +119,12 @@ export class UsersService {
     const updatedUser = await this.prisma.user.update({
       where: { id: id },
       data: updateUserDto,
+      include: { profile: true },
     });
 
-    return updatedUser;
+    const serializedUser = plainToClass(UserEntity, updatedUser);
+
+    return serializedUser;
   }
 
   async remove(id: number) {
@@ -117,7 +138,9 @@ export class UsersService {
       include: { profile: true },
     });
 
-    return deletedUser;
+    const serializedUser = plainToClass(UserEntity, deletedUser);
+
+    return serializedUser;
   }
 
   async findUserByEmail(email: string) {

@@ -1,11 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Profile, Role, User } from '@prisma/client';
+import { AuthEntity } from './auth.entity';
 
-export class SignInEntity implements SignInEntity {
+export class SignInEntity {
+  @ApiProperty({ default: 202 })
+  statusCode: number;
 
   @ApiProperty()
-  email: string;
-  
-  @ApiProperty()
-  password: string;
+  data: AuthEntity;
 }

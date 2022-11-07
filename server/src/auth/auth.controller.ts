@@ -3,9 +3,13 @@ import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './../users/dto/create-user.dto';
 import { SignInUserDto } from './dto/signin-user.dto';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { UserCreatedResponseEntity } from './entities/UserCreatedResponse.entity';
-import { SignInResponseEntity } from './entities/SignInResponse.entity';
+import {
+  ApiAcceptedResponse,
+  ApiCreatedResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { SignUpEntity } from './entities/signup.entity';
+import { SignInEntity } from './entities/signin.entity';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -15,7 +19,7 @@ export class AuthController {
   // return user and jwt for signin and signup
 
   @Post('signup')
-  @ApiCreatedResponse({ type: UserCreatedResponseEntity })
+  @ApiCreatedResponse({ type: SignUpEntity })
   async signUp(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
     const signedUser = await this.authService.signUp(createUserDto);
 
@@ -26,7 +30,7 @@ export class AuthController {
   }
 
   @Post('signin')
-  @ApiCreatedResponse({ type: SignInResponseEntity })
+  @ApiAcceptedResponse({ type: SignInEntity })
   async signIn(@Body() signInUserDto: SignInUserDto, @Res() res: Response) {
     const signedUser = await this.authService.signIn(signInUserDto);
 

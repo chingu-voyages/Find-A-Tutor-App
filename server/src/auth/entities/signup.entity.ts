@@ -1,10 +1,10 @@
-import { SignInEntity } from './signin.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { AuthEntity } from './auth.entity';
 
-export class SignInResponseEntity {
+export class SignUpEntity {
   @ApiProperty({ default: 201 })
   statusCode: number;
 
   @ApiProperty()
-  data: string;
+  data: AuthEntity;
 }

@@ -18,6 +18,7 @@ import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import {
   UserOkResponseEntity,
   UserOkResponseEntityArray,
+  UserOkResponseEntityArrayTutors,
 } from './entities/userOkResponse.entity';
 import { UserCreatedResponseEntity } from './entities/userCreatedResponse.entity';
 
@@ -60,7 +61,7 @@ export class UsersController {
   }
 
   @Get('tutors')
-  @ApiOkResponse({ type: UserOkResponseEntityArray })
+  @ApiOkResponse({ type: UserOkResponseEntityArrayTutors })
   async findAllTutors(@Res() res: Response) {
     const tutors = await this.usersService.findAllTutors();
 
