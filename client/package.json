@@ -8,7 +8,9 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint:staged": "lint-staged"
+    "lint:staged": "lint-staged",
+    "format:check": "prettier --check 'src/**/*.ts'",
+    "lint:check": "eslint \"{src,apps,libs,test}/**/*.ts\" "
   },
   "lint-staged": {
     "src/**/*.+(ts|tsx)": [
