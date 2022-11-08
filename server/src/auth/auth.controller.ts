@@ -1,101 +1,42 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  NotFoundException,
-  Res,
-  HttpStatus,
-  ParseIntPipe,
-  HttpException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Controller, Post, Body, Res, HttpStatus } from '@nestjs/common';
 import { Response } from 'express';
-import { UsersService } from '../users/users.service';
 import { AuthService } from './auth.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto } from './../users/dto/create-user.dto';
 import { SignInUserDto } from './dto/signin-user.dto';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { UserCreatedResponseEntity } from './entities/UserCreatedResponse.entity';
-import { SignInResponseEntity } from './entities/SignInResponse.entity';
-import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
-
-export interface UserJwtPayload {
-  email: string;
-  userId: number;
-}
+import {
+  ApiAcceptedResponse,
+  ApiCreatedResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { SignUpEntity } from './entities/signup.entity';
+import { SignInEntity } from './entities/signin.entity';
 
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
-  constructor(
-    private readonly usersService: UsersService,
-    private jwtService: JwtService,
-    private authService: AuthService,
-  ) {}
+  constructor(private authService: AuthService) {}
 
   // return user and jwt for signin and signup
 
   @Post('signup')
-  @ApiCreatedResponse({ type: UserCreatedResponseEntity })
-  async create(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
-    const createdUser = await this.authService.create(createUserDto);
+  @ApiCreatedResponse({ type: SignUpEntity })
+  async signUp(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
+    const signedUser = await this.authService.signUp(createUserDto);
 
-    // console.log(createdUser);
-
-    const { id: userId, role, email } = createdUser;
-
-    if (createdUser) {
-      const typeid = createdUser.id;
-      const payload: UserJwtPayload = { email, userId };
-      const token: string = await this.jwtService.sign(payload);
-      // console.log(token);
-      return res.status(HttpStatus.CREATED).json({
-        statusCode: HttpStatus.CREATED,
-        data: { user: { id: userId, role, email }, token },
-      });
-    } else {
-      throw new UnauthorizedException('Incorrect login credentials!');
-    }
+    return res.status(HttpStatus.CREATED).json({
+      statusCode: HttpStatus.CREATED,
+      data: signedUser,
+    });
   }
 
   @Post('signin')
-  @ApiCreatedResponse({ type: SignInResponseEntity })
-  async signin(@Body() signInUserDto: SignInUserDto, @Res() res: Response) {
-    const user: any = await this.usersService.findUserByEmail(
-      signInUserDto.email,
-    );
+  @ApiAcceptedResponse({ type: SignInEntity })
+  async signIn(@Body() signInUserDto: SignInUserDto, @Res() res: Response) {
+    const signedUser = await this.authService.signIn(signInUserDto);
 
-    if (!user) {
-      throw new HttpException('invalid_credentials', HttpStatus.UNAUTHORIZED);
-    }
-
-    const { password, role, email  } = user;
-
-    bcrypt.compare(signInUserDto.password, password, function (err, result) {
-      if (err) {
-        console.log(err);
-      }
-      if (result) {
-        return true;
-      }
+    return res.status(HttpStatus.ACCEPTED).json({
+      statusCode: HttpStatus.ACCEPTED,
+      data: signedUser,
     });
-
-    if (user) {
-      const userId = user.id;
-      const payload: UserJwtPayload = { email, userId };
-      const token: string = await this.jwtService.sign(payload);
-    //   console.log(token);
-      return res.status(HttpStatus.ACCEPTED).json({
-        statusCode: HttpStatus.ACCEPTED,
-        data: { user: { id: userId, role, email }, token },
-      });
-    } else {
-      throw new UnauthorizedException('Incorrect login credentials!');
-    }
   }
 }
