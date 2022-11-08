@@ -1,10 +1,10 @@
-import { ProfileEntity } from './profile.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { AuthEntity } from './auth.entity';
 
-export class ProfileCreatedResponseEntity {
+export class SignUpEntity {
   @ApiProperty({ default: 201 })
   statusCode: number;
 
   @ApiProperty()
-  data: ProfileEntity;
+  data: AuthEntity;
 }
