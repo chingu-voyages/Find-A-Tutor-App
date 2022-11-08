@@ -4,7 +4,7 @@
   "description": "Your project's `readme` is as important to success as your code. For  this reason you should put as much care into its creation and maintenance as you would any other component of the application.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cd server && npm run test",
     "install": "cd client && npm install && cd ../server && npm install",
     "prepare": "husky install",
     "lint": "npm-run-all lint:backend lint:frontend",
