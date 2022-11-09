@@ -26,5 +26,6 @@ export const LoginSchema = Yup.object({
     .min(8, 'Password must be at least 8 characters'),
 });
 
-export type RegisterType = Yup.InferType<typeof RegisterSchema>;
-export type Login = Yup.InferType<typeof LoginSchema>;
+// TODO: discuss profile schema and use this if firstName and lastName gets moved to User Schema in backend
+// export type RegisterType = Yup.InferType<typeof RegisterSchema>;
+// export type Login = Yup.InferType<typeof LoginSchema>;
