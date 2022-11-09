@@ -1,31 +1,31 @@
 import axios, { AxiosResponse } from 'axios';
 import jwt_decode from 'jwt-decode';
-import { Account } from '../models/Account';
-import { User } from '../models/User';
+import { axiosConfig } from '../utils/configs';
+import { Login, RegisterType } from '../utils/schemas';
+import { User } from '../utils/User';
 
-const baseURL = 'api/account/';
-axios.defaults.baseURL = `http://localhost:8080`;
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-  },
-};
+axios.defaults.baseURL = axiosConfig.baseUrl;
 
-const signUp = async (dto: Account) =>
-  saveUser(await axios.post<Account>(baseURL + 'signup', { ...dto }, config));
+const signUp = async (dto: RegisterType) =>
+  saveUser(
+    await axios.post<RegisterType>(
+      'auth/signup',
+      { ...dto },
+      axiosConfig.jsonOptions,
+    ),
+  );
 
-const signIn = async (dto: Account) =>
-  saveUser(await axios.post(baseURL + 'signin', { ...dto }, config));
+const signIn = async (dto: Login) =>
+  saveUser(
+    await axios.post('auth/signin', { ...dto }, axiosConfig.jsonOptions),
+  );
 
 const logout = () => localStorage.removeItem('user');
 
 const saveUser = (res: AxiosResponse<any, any>): User => {
   if (!res.data) throw new Error('Invalid account credentials');
 
-  const data: any = jwt_decode(res.data.access_token);
-  data.accessToken = res.data.access_token;
-  data.accountId = data.id;
-  delete data.id;
+  const data: any = jwt_decode(res.data.token);
 
   localStorage.setItem('user', JSON.stringify(data));
 
@@ -38,4 +38,4 @@ const saveUser = (res: AxiosResponse<any, any>): User => {
 
 const getUser = (): User => JSON.parse(localStorage.getItem('user') || '{}');
 
-export default { signUp, signIn, logout, getUser };
+export { signUp, signIn, logout, getUser };
