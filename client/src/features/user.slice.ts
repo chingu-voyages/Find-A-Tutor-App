@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
-import { User } from '../utils/User';
+import { IUser } from '../models/IUser';
 import { login, register, logout } from './user.thunk';
 import * as authService from '../services';
 
 interface UserState {
-  entity: User | null;
+  entity: IUser | null;
   status: 'idle' | 'pending' | 'succeeded' | 'failed';
   error: string | null;
 }
@@ -44,6 +44,7 @@ const userSlice = createSlice({
     });
 
     builder.addCase(register.fulfilled, (state, action) => {
+      console.log('register fulfilled', action.payload);
       state.entity = action.payload;
       state.status = 'succeeded';
     });

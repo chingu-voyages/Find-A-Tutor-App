@@ -1,11 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Login, RegisterType } from '../utils/schemas';
-import { User } from '../utils/User';
+import { IUser } from '../models/IUser';
 import * as authService from '../services';
+import { ILogin } from '../models/ILogin';
+import { IRegister } from '../models/IRegister';
 
 const login = createAsyncThunk<
-  User,
-  Login,
+  IUser,
+  ILogin,
   { rejectValue: { message: string } }
 >('users/signin', async (signInFormData, thunkAPI) => {
   try {
@@ -20,15 +21,18 @@ const login = createAsyncThunk<
 });
 
 const register = createAsyncThunk<
-  User,
-  RegisterType,
+  IUser,
+  IRegister,
   { rejectValue: { message: string } }
 >('users/signup', async (signUpFormData, thunkAPI) => {
+  console.log('Inside register createAsyncThunk 1');
   try {
+    console.log('Inside register createAsyncThunk 2');
     const user = await authService.signUp(signUpFormData);
     console.log('thunk user', user);
     return user;
   } catch (err: Error | any) {
+    console.log(err);
     return thunkAPI.rejectWithValue({
       message: err.message,
     });
