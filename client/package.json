@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "lint:staged": "lint-staged",
     "format:check": "prettier --check 'src/**/*.ts'",
-    "lint:check": "eslint \"{src,apps,libs,test}/**/*.ts\" "
+    "lint:check": "eslint \"{src,apps,libs,test,/}/**/*.ts\" "
   },
   "lint-staged": {
     "src/**/*.+(ts|tsx)": [
