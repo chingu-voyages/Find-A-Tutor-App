@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Formik, Form, FormikHelpers } from 'formik';
 import TextInput from '../components/common/TextInput';
-import { RegisterType, RegisterSchema } from '../utils/schemas';
+import { RegisterSchema } from '../utils/schemas';
 import Button from '../components/Button';
 import Select, { Option } from '../components/common/Select';
 import { Role } from '../utils/Role';
 import { UseAppDispatch } from '../app/store';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../features/user.thunk';
+import { IRegister } from '../models/IRegister';
 export interface RegisterFormValues {
   firstName: string;
   lastName: string;
@@ -39,9 +40,14 @@ function Register() {
             values: RegisterFormValues,
             { setSubmitting }: FormikHelpers<RegisterFormValues>,
           ) => {
-            const newRegistration: RegisterType = {
-              ...values,
+            const newRegistration: IRegister = {
+              email: values.email,
+              password: values.password,
               role: selectedRole,
+              profile: {
+                firstName: values.firstName,
+                lastName: values.lastName,
+              },
             };
 
             dispatch(register(newRegistration));
