@@ -29,3 +29,7 @@ export const LoginSchema = Yup.object({
 // TODO: discuss profile schema and use this if firstName and lastName gets moved to User Schema in backend
 // export type RegisterType = Yup.InferType<typeof RegisterSchema>;
 // export type Login = Yup.InferType<typeof LoginSchema>;
+export const EditProfileSchema = Yup.object().shape({
+  firstName: Yup.string().required('First Name is required'),
+  lastName: Yup.string().required('Last Name is required'),
+});

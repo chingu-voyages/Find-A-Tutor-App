@@ -18,7 +18,7 @@ function Profile() {
   const role = 'TUTOR';
 
   return (
-    <div className="card max-w-xl bg-base-100 shadow-xl">
+    <div className="card max-w-xl bg-base-100 shadow-xl my-8">
       {role === 'TUTOR' && <TutorProfile {...fakeTutor} />}
       {/* {role === 'STUDENT' && <StudentProfile {...fakeStudent}/>} */}
     </div>
