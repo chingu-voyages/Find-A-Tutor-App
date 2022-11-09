@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { Formik, Form, FormikHelpers } from 'formik';
 import TextInput from '../components/common/TextInput';
-import { RegisterSchema } from '../utils/schemas';
+import { RegisterType, RegisterSchema } from '../utils/schemas';
 import Button from '../components/Button';
 import Select, { Option } from '../components/common/Select';
+import { Role } from '../utils/Role';
+import { UseAppDispatch } from '../app/store';
+import { useNavigate } from 'react-router-dom';
+import { register } from '../features/user.thunk';
 export interface RegisterFormValues {
   firstName: string;
   lastName: string;
@@ -12,10 +16,12 @@ export interface RegisterFormValues {
 }
 
 function Register() {
-  const [selectedRole, setSelectedRole] = useState('STUDENT');
+  const dispatch = UseAppDispatch();
+  const navigate = useNavigate();
+  const [selectedRole, setSelectedRole] = useState(Role.STUDENT);
 
   const handleRoleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedRole(e.target.value);
+    setSelectedRole(e.target.value as Role);
   };
 
   return (
@@ -33,11 +39,19 @@ function Register() {
             values: RegisterFormValues,
             { setSubmitting }: FormikHelpers<RegisterFormValues>,
           ) => {
+            const newRegistration: RegisterType = {
+              ...values,
+              role: selectedRole,
+            };
+
+            dispatch(register(newRegistration));
             setTimeout(() => {
               alert(JSON.stringify(values, null, 2));
               console.log('Selected Role: ', selectedRole);
               setSubmitting(false);
-            }, 500);
+            }, 300);
+
+            navigate('/');
           }}
         >
           <Form className="card-body items-start gap-4">
@@ -45,8 +59,8 @@ function Register() {
             <div className="flex-row">
               <label className="self-center mr-3">Sign Up as:</label>
               <Select handleChange={handleRoleChange}>
-                <Option value="STUDENT" label="Student" />
-                <Option value="TUTOR" label="Tutor" />
+                <Option value={Role.STUDENT} label="Student" />
+                <Option value={Role.TUTOR} label="Tutor" />
               </Select>
             </div>
             <TextInput

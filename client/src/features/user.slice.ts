@@ -1,8 +1,8 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
-import { User } from '../models/User';
-import authService from '../services/auth.service';
-import { signIn, signUp, signOut } from './account.thunk';
+import { User } from '../utils/User';
+import { login, register, logout } from './user.thunk';
+import * as authService from '../services';
 
 interface UserState {
   entity: User | null;
@@ -21,41 +21,41 @@ const userSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(signIn.pending, (state) => {
+    builder.addCase(login.pending, (state) => {
       state.status = 'pending';
       state.error = null;
     });
 
-    builder.addCase(signIn.fulfilled, (state, action) => {
+    builder.addCase(login.fulfilled, (state, action) => {
       state.entity = action.payload;
       state.status = 'succeeded';
     });
 
-    builder.addCase(signIn.rejected, (state, action) => {
+    builder.addCase(login.rejected, (state, action) => {
       if (action.payload) {
         state.error = action.payload.message;
       }
       state.status = 'failed';
     });
 
-    builder.addCase(signUp.pending, (state) => {
+    builder.addCase(register.pending, (state) => {
       state.status = 'pending';
       state.error = null;
     });
 
-    builder.addCase(signUp.fulfilled, (state, action) => {
+    builder.addCase(register.fulfilled, (state, action) => {
       state.entity = action.payload;
       state.status = 'succeeded';
     });
 
-    builder.addCase(signUp.rejected, (state, action) => {
+    builder.addCase(register.rejected, (state, action) => {
       if (action.payload) {
         state.error = action.payload.message;
       }
       state.status = 'failed';
     });
 
-    builder.addCase(signOut.fulfilled, (state) => {
+    builder.addCase(logout.fulfilled, (state) => {
       state.entity = null;
     });
   },
