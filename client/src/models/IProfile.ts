@@ -6,8 +6,8 @@ export interface IProfile {
   lastName: string;
   age: number;
   bio: string;
-  subjects?: string | string[];
-  edLevel?: string;
+  subjects?: string[];
+  educationalLevel?: string;
   rate?: number;
   phone?: string;
   city?: string;
