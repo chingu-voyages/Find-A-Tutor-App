@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../components/Button';
+import Modal from '../components/Modal';
+import EditProfileForm from './EditProfileForm';
 
 export interface TutorProfileProps {
   firstName: string;
@@ -15,6 +17,8 @@ export interface TutorProfileProps {
 }
 
 function TutorProfile(tutor: TutorProfileProps) {
+  const [openModal, setOpenModal] = useState(false);
+  const handleToggle = () => setOpenModal(!openModal);
   // Temporary until authentication is implemented
   const isAuthenticated = true;
 
@@ -30,12 +34,9 @@ function TutorProfile(tutor: TutorProfileProps) {
             </div>
           </figure>
           <h2 className="card-title justify-self-center my-2">{`${tutor.firstName} ${tutor.lastName}`}</h2>
-          {isAuthenticated && (
-            <div className="card-actions">
-              {/* TODO: Add link to EditProfile */}
-              <Button text="Edit Profile" />
-            </div>
-          )}
+          <div className="card-actions">
+            <Button text="Edit Profile" onClick={handleToggle} />
+          </div>
         </div>
         <div className="grid grid-rows-8 gap-2 text-center md:text-start">
           {/* TODO: Replace with Rating component that handles it's own state */}
@@ -127,6 +128,9 @@ function TutorProfile(tutor: TutorProfileProps) {
           </>
         )}
       </div>
+      <Modal open={openModal} handleClose={() => setOpenModal(false)}>
+        <EditProfileForm toggle={handleToggle} />
+      </Modal>
     </div>
   );
 }

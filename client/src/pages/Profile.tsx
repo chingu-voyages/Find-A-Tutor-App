@@ -29,10 +29,10 @@ const fakeStudent: StudentProfileProps = {
 
 function Profile() {
   // Temporary filler until backend is integrated
-  const role = 'STUDENT';
+  const role = 'TUTOR';
 
   return (
-    <div className="card max-w-xl bg-base-100 shadow-xl my-5">
+    <div className="card max-w-xl bg-base-100 shadow-xl my-8">
       {role === 'TUTOR' && <TutorProfile {...fakeTutor} />}
       {role === 'STUDENT' && <StudentProfile {...fakeStudent} />}
     </div>
