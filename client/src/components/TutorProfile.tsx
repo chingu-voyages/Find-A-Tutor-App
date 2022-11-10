@@ -30,10 +30,12 @@ function TutorProfile(tutor: TutorProfileProps) {
             </div>
           </figure>
           <h2 className="card-title justify-self-center my-2">{`${tutor.firstName} ${tutor.lastName}`}</h2>
-          <div className="card-actions">
-            {/* TODO: Add link to EditProfile */}
-            <Button text="Edit Profile" />
-          </div>
+          {isAuthenticated && (
+            <div className="card-actions">
+              {/* TODO: Add link to EditProfile */}
+              <Button text="Edit Profile" />
+            </div>
+          )}
         </div>
         <div className="grid grid-rows-8 gap-2 text-center md:text-start">
           {/* TODO: Replace with Rating component that handles it's own state */}
@@ -110,7 +112,7 @@ function TutorProfile(tutor: TutorProfileProps) {
                           <td>
                             {/* TODO: Link to student details page so tutor can add to report*/}
                             <a href="#">
-                              <Button text="Report" />
+                              <Button text="Reports" />
                             </a>
                           </td>
                         </tr>
