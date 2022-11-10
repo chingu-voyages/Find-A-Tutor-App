@@ -21,6 +21,7 @@ model User {
   password String
   profile  Profile?
   role     Role     @default(STUDENT)
+  reviews  Review[]
 }
 
 model Profile {
@@ -36,20 +37,20 @@ model Profile {
   city       String?
   state      String?
   profileUrl String?  @default("https://placeimg.com/192/192/people")
-  // review    Review[]
+  reviews    Review[]
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     Int      @unique
 }
 
-// model Review {
-//   id        Int     @id @default(autoincrement())
-//   text      String
-//   rating    Int
-//   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
-//   profileId Int     @unique
-//   user User Profile @relation(fields: [userId], references: [id], onDelete: Cascade)
-//   userId Int
-// }
+model Review {
+  id        Int     @id @default(autoincrement())
+  text      String
+  rating    Int
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId Int     
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int     
+}
 
 enum Role {
   TUTOR
