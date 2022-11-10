@@ -17,11 +17,11 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  email    String   @unique
-  password String
-  profile  Profile?
-  role     Role     @default(STUDENT)
-  reviews  Review[]
+  email        String   @unique
+  password     String
+  profile      Profile?
+  role         Role     @default(STUDENT)
+  givenReviews Review[]
 }
 
 model Profile {
@@ -44,12 +44,15 @@ model Profile {
 
 model Review {
   id        Int     @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   text      String
   rating    Int
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  profileId Int     
+  profileId Int
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int     
+  userId    Int
 }
 
 enum Role {
