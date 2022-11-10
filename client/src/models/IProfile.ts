@@ -6,20 +6,18 @@ export interface IProfile {
   lastName: string;
   age: number;
   bio: string;
-  subjects: string;
-  edLevel: string;
-  rate: number;
-  phone: string;
-  city: string;
-  state: string;
+  subjects?: string | string[];
+  edLevel?: string;
+  rate?: number;
+  phone?: string;
+  city?: string;
+  state?: string;
   profileUrl: string;
   userId: number;
-  user: {
-    id: number;
-    email: string;
-    password: string;
-    role: Role;
-    createdAt: string;
-    updatedAt: string;
-  };
+  email: string;
+  role: Role;
+  createdAt?: string;
+  updatedAt?: string;
+  students?: string[];
+  tutors?: string[];
 }
