@@ -1,26 +1,18 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { axiosConfig } from '../utils/configs';
 import * as authService from './auth.service';
 
 axios.defaults.baseURL = axiosConfig.baseUrl;
 
-const getAllTutors = () => axios.get<any, any>('users/tutors');
-const getAllStudents = () => axios.get<any, any>('users/students');
-
-const getUserData = async () => {
+const getLoggedInUserProfile = async () => {
   const user = authService.getUser();
 
   if (!user) {
-    throw new Error('Unable to retrieve user!');
+    throw new Error('User is not logged in!');
   }
 
-  const token = user.token;
-
   try {
-    const userData = await axios.get<any, any>(
-      'users/' + user.id,
-      axiosConfig.tokenOptions(token),
-    );
+    const userData = await axios.get<any, any>('profiles/' + user.id);
 
     return userData;
   } catch (err) {
@@ -28,4 +20,4 @@ const getUserData = async () => {
   }
 };
 
-export { getAllTutors, getAllStudents, getUserData };
+export { getLoggedInUserProfile };
