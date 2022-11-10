@@ -55,7 +55,7 @@ const Navbar = () => {
                 </NavLink>
               </li>
               <div className="w-5/6">
-                <NavLink to="#">
+                <NavLink to="account/login">
                   <Button text="Log In" />
                 </NavLink>
               </div>
