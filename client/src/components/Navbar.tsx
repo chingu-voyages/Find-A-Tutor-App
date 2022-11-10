@@ -75,7 +75,7 @@ const Navbar = () => {
                 <a href="#">Start Tutoring</a>
               </li>
             </ul>
-            <NavLink to="#">
+            <NavLink to="account/login">
               <Button text="Log In" custom={['mr-4']} />
             </NavLink>
             <NavLink to="account/register">
