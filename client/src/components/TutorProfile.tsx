@@ -35,7 +35,6 @@ function TutorProfile(tutor: TutorProfileProps) {
           </figure>
           <h2 className="card-title justify-self-center my-2">{`${tutor.firstName} ${tutor.lastName}`}</h2>
           <div className="card-actions">
-            {/* TODO: Add link to EditProfile */}
             <Button text="Edit Profile" onClick={handleToggle} />
           </div>
         </div>
@@ -114,7 +113,7 @@ function TutorProfile(tutor: TutorProfileProps) {
                           <td>
                             {/* TODO: Link to student details page so tutor can add to report*/}
                             <a href="#">
-                              <Button text="Report" />
+                              <Button text="Reports" />
                             </a>
                           </td>
                         </tr>
