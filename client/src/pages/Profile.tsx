@@ -74,7 +74,7 @@ function Profile() {
   }, [params.id]);
 
   // Temporary filler until backend is integrated
-  const role = 'STUDENT';
+  const role = 'TUTOR';
 
   if (error || !profile.id || profile.id === -1) {
     return <p>Could not load profile!</p>;

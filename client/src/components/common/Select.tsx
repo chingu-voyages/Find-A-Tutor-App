@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 interface OptionsProps {
   /**
@@ -17,14 +17,6 @@ export function Option({ value, label }: OptionsProps) {
 
 interface SelectProps {
   /**
-   * Id of Select
-   */
-  id?: string;
-  /**
-   * Name of Select
-   */
-  name?: string;
-  /**
    * Non-selectable option to use as placeholder for Select
    */
   placeholder?: string;
@@ -32,10 +24,6 @@ interface SelectProps {
    * Options to render in dropdown
    */
   children?: React.ReactNode;
-  /**
-   * Default Value of Selected Item
-   */
-  defaultValue?: string;
   /**
    * Value of Selected Item
    */
@@ -46,15 +34,7 @@ interface SelectProps {
   handleChange?: React.ChangeEventHandler<HTMLSelectElement>;
 }
 
-function Select({
-  id,
-  name,
-  placeholder,
-  children,
-  defaultValue,
-  value,
-  handleChange,
-}: SelectProps) {
+function Select({ placeholder, children, handleChange }: SelectProps) {
   return (
     <select onChange={handleChange} className="select select-bordered max-w-xs">
       {placeholder && (
