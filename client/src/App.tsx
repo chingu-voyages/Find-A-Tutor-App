@@ -33,6 +33,7 @@ function App() {
       <Route path="/" errorElement={<ErrorPage />} element={<RootLayout />}>
         {homePage()}
         <Route path="account" element={<Profile />} />
+        <Route path="account/:id" element={<Profile />} />
         <Route path="account/register" element={<Register />} />
         <Route path="account/login" element={<Login />} />
       </Route>,
