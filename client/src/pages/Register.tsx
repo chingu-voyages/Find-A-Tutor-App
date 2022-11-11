@@ -2,10 +2,6 @@ import React, { useState } from 'react';
 import { Formik, Form, FormikHelpers } from 'formik';
 import TextInput from '../components/common/TextInput';
 import { RegisterSchema } from '../utils/schemas';
-import { UseAppDispatch } from '../app/store';
-import { createUser } from '../features/user/service';
-import { User } from '../features/user/types';
-import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import Select, { Option } from '../components/common/Select';
 import { Role } from '../utils/Role';
@@ -18,7 +14,6 @@ export interface RegisterFormValues {
   lastName: string;
   email: string;
   password: string;
-  role: string;
 }
 
 function Register() {
@@ -39,7 +34,6 @@ function Register() {
             lastName: '',
             email: '',
             password: '',
-            role: 'STUDENT',
           }}
           validationSchema={RegisterSchema}
           onSubmit={(
