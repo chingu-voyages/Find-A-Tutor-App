@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, FormikHelpers } from 'formik';
 import TextInput from '../components/common/TextInput';
 import { RegisterSchema } from '../utils/schemas';
@@ -7,6 +7,12 @@ import { createUser } from '../features/user/service';
 import { User } from '../features/user/types';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
+import Select, { Option } from '../components/common/Select';
+import { Role } from '../utils/Role';
+import { UseAppDispatch } from '../app/store';
+import { useNavigate } from 'react-router-dom';
+import { register } from '../features/user.thunk';
+import { IRegister } from '../models/IRegister';
 export interface RegisterFormValues {
   firstName: string;
   lastName: string;
@@ -18,6 +24,11 @@ export interface RegisterFormValues {
 function Register() {
   const dispatch = UseAppDispatch();
   const navigate = useNavigate();
+  const [selectedRole, setSelectedRole] = useState(Role.STUDENT);
+
+  const handleRoleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedRole(e.target.value as Role);
+  };
 
   return (
     <>
@@ -35,26 +46,35 @@ function Register() {
             values: RegisterFormValues,
             { setSubmitting }: FormikHelpers<RegisterFormValues>,
           ) => {
-            const newUser: User = {
-              firstName: values.firstName,
-              lastName: values.lastName,
+            const newRegistration: IRegister = {
               email: values.email,
               password: values.password,
-              role: values.role,
+              role: selectedRole,
+              profile: {
+                firstName: values.firstName,
+                lastName: values.lastName,
+              },
             };
 
-            dispatch(createUser(newUser));
-
+            dispatch(register(newRegistration));
             setTimeout(() => {
               alert(JSON.stringify(values, null, 2));
+              console.log('Selected Role: ', selectedRole);
               setSubmitting(false);
-            }, 500);
+            }, 300);
 
             navigate('/');
           }}
         >
           <Form className="card-body items-start gap-4">
             <h2 className="card-title self-center">Create an Account</h2>
+            <div className="flex-row">
+              <label className="self-center mr-3">Sign Up as:</label>
+              <Select handleChange={handleRoleChange}>
+                <Option value={Role.STUDENT} label="Student" />
+                <Option value={Role.TUTOR} label="Tutor" />
+              </Select>
+            </div>
             <TextInput
               name="firstName"
               label="First Name"
@@ -73,7 +93,6 @@ function Register() {
               type="password"
             />
             <div className="card-actions md:self-center">
-              {/* <button className="btn btn-primary text-neutral">Submit</button> */}
               <Button text="Submit" />
             </div>
           </Form>

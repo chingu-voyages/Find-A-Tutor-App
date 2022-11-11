@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  NotFoundException,
   Res,
   HttpStatus,
   ParseIntPipe,
@@ -17,10 +16,14 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import {
-  UserOkResponseEntity,
-  UserOkResponseEntityArray,
-} from './entities/userOkResponse.entity';
-import { UserCreatedResponseEntity } from './entities/UserCreatedResponse.entity';
+  CreateUserEntity,
+  DeleteUserEntity,
+  GetStudentsEntity,
+  GetTutorsEntity,
+  GetUserEntity,
+  GetUsersEntity,
+  UpdateUserEntity,
+} from './entities/user-responses.entity';
 
 @Controller('users')
 @ApiTags('users')
@@ -28,7 +31,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  @ApiCreatedResponse({ type: UserCreatedResponseEntity })
+  @ApiCreatedResponse({ type: CreateUserEntity })
   async create(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
     const createdUser = await this.usersService.create(createUserDto);
 
@@ -39,16 +42,9 @@ export class UsersController {
   }
 
   @Get()
-  @ApiOkResponse({ type: UserOkResponseEntityArray })
-  async findAll(
-    @Res()
-    res: Response,
-  ) {
+  @ApiOkResponse({ type: GetUsersEntity })
+  async findAll(@Res() res: Response) {
     const users = await this.usersService.findAll();
-
-    if (!users.length) {
-      throw new NotFoundException('No users found');
-    }
 
     return res.status(HttpStatus.OK).json({
       statusCode: HttpStatus.OK,
@@ -56,14 +52,32 @@ export class UsersController {
     });
   }
 
+  @Get('students')
+  @ApiOkResponse({ type: GetStudentsEntity })
+  async findAllStudents(@Res() res: Response) {
+    const students = await this.usersService.findAllStudents();
+
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: students,
+    });
+  }
+
+  @Get('tutors')
+  @ApiOkResponse({ type: GetTutorsEntity })
+  async findAllTutors(@Res() res: Response) {
+    const tutors = await this.usersService.findAllTutors();
+
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: tutors,
+    });
+  }
+
   @Get(':id')
-  @ApiOkResponse({ type: UserOkResponseEntity })
+  @ApiOkResponse({ type: GetUserEntity })
   async findOne(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
     const user = await this.usersService.findOne(id);
-
-    if (!user) {
-      throw new NotFoundException(`User with id: ${id} not found`);
-    }
 
     return res.status(HttpStatus.OK).json({
       statusCode: HttpStatus.OK,
@@ -72,7 +86,7 @@ export class UsersController {
   }
 
   @Patch(':id')
-  @ApiOkResponse({ type: UserOkResponseEntity })
+  @ApiOkResponse({ type: UpdateUserEntity })
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateUserDto: UpdateUserDto,
@@ -87,7 +101,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  @ApiOkResponse({ type: UserOkResponseEntity })
+  @ApiOkResponse({ type: DeleteUserEntity })
   async remove(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
     const removedUser = await this.usersService.remove(id);
 
