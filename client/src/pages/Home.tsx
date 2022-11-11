@@ -1,6 +1,7 @@
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import { RootState } from '../app/store';
 import { selectUser } from '../features/user.slice';
+import Hero from '../components/Hero';
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
@@ -10,10 +11,10 @@ function Home() {
   console.log('user home', user);
 
   return (
-    <div>
-      <h1>Home Page</h1>
+    <>
+      <Hero />
       {user && <p>Hello {user.id}</p>}
-    </div>
+    </>
   );
 }
 
