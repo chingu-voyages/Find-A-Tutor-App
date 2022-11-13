@@ -27,6 +27,16 @@ export class ReviewsController {
     return this.reviewsService.findAll();
   }
 
+  @Get('tutor/:profileId')
+  findAllByTutor(@Param('profileId') profileId: string) {
+    return this.reviewsService.findAllByTutor(+profileId);
+  }
+
+  @Get('student/:userId')
+  findAllByStudent(@Param('userId') userId: string) {
+    return this.reviewsService.findAllByStudent(+userId);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.reviewsService.findOne(+id);
