@@ -318,3 +318,16 @@ export const userProfiles = [
     },
   },
 ];
+
+export const reviewText = [
+  'This is a review',
+  'I had this individual as my tutor',
+  'I learned things from this tutor',
+  'This tutor was a tutor',
+  'Out of all tutors I had this tutor as my tutor',
+  'Truly one of the tutors of all time',
+  'My brain has been introduced to knowledge',
+  'I am reviewing this tutor',
+  'I am a student that is reviewing this tutor',
+  'This individual tutored me',
+];
