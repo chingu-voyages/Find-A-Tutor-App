@@ -1,14 +1,64 @@
-# voyage-tasks
+<h1 align="center">Find a Tutor MERN App</h1>
+<h3 align="center">
+    <a href="https://find-a-tutor.onrender.com/">Live</a> · 
+</h3>
 
-Your project's `readme` is as important to success as your code. For 
-this reason you should put as much care into its creation and maintenance
-as you would any other component of the application.
+## Table of Contents
+- [Description](#description)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Roadmap](#roadmap)
+- [Socials](#socials)
 
-If you are unsure of what should go into the `readme` let this article,
-written by an experienced Chingu, be your starting point - 
-[Keys to a well written README](https://tinyurl.com/yk3wubft).
+## Description
+-  The _Find a Tutor_ web app connects clients with education providers, allowing them to find high-quality local education services
+- Clients can also review and communicate with their education providers. 
+- _Find a Tutor_ provides a platform for education providers to promote their services. 
+- Also allows education providers to easily access their client sessions, and add new information following a session with their clients.
 
-And before we go there's "one more thing"! Once you decide what to include
-in your `readme` feel free to replace the text we've provided here.
 
-> Own it & Make it your Own!
+## Tech Stack
+**Language**
+- TypeScript
+
+**Backend**
+- Nest.js
+- MySQL
+- Prisma
+
+**Frontend**
+- React
+- React Router
+- Tailwind CSS
+- DaisyUI
+
+**Others**
+- Docker
+- Github Action Workflows
+- Jest
+
+## Getting Started
+
+### Prerequisites
+- NodeJs V16 or higher
+- Docker
+
+### How to run
+- Please see [CONTRIBUTION.md](.github/contributing.md) for instructions
+
+## Roadmap
+- [ ] Login & Registration
+- [ ] Student & Tutor user roles
+- [ ] Student Private Profile
+- [ ] Student Public Profile
+- [ ] Tutor Private Profile
+- [ ] Tutor Public Profile
+- [ ] Tutor Review & Rating System
+- [ ] Direct messaging system
+- [ ] Tutor search & filter system
+- [ ] Appointment scheduling
+- [ ] Google Map Integration
+
+
+## Socials
+- Contact [riboney](https://github.com/riboney) at ribba#4809 on discord, for any project collaborations or inquiries!
