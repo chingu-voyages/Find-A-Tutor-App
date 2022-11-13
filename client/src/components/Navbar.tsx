@@ -22,7 +22,7 @@ const Navbar = () => {
     dispatch(logout());
   };
 
-  if (!user) {
+  if (!user || JSON.stringify(user) === '{}') {
     return (
       <div className="navbar bg-base-100 items-center justify-between">
         <div className="navbar-start">
