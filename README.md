@@ -44,7 +44,7 @@
 - Docker
 
 ### How to run
-- Please see [CONTRIBUTION.md](.github/contributing.md) for instructions
+- Please see [CONTRIBUTING.md](.github/contributing.md) for instructions
 
 ## Roadmap
 - [ ] Login & Registration
