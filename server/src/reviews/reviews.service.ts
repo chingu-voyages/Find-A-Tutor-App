@@ -7,8 +7,8 @@ import { PrismaService } from './../prisma/prisma.service';
 export class ReviewsService {
   constructor(private prisma: PrismaService) {}
 
-  create(createReviewDto: CreateReviewDto) {
-    return this.prisma.review.create({
+  async create(createReviewDto: CreateReviewDto) {
+    return await this.prisma.review.create({
       data: {
         text: createReviewDto.text,
         rating: createReviewDto.rating,
@@ -22,19 +22,115 @@ export class ReviewsService {
     });
   }
 
-  findAll() {
-    return `This action returns all reviews`;
+  async findAll() {
+    return await this.prisma.review.findMany({
+      include: {
+        profile: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            email: true,
+            profile: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+              },
+            },
+          },
+        },
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} review`;
+  async findOne(id: number) {
+    return await this.prisma.review.findUnique({
+      where: { id: id },
+      include: {
+        profile: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            email: true,
+            profile: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+              },
+            },
+          },
+        },
+      },
+    });
   }
 
-  update(id: number, updateReviewDto: UpdateReviewDto) {
-    return `This action updates a #${id} review`;
+  async update(id: number, updateReviewDto: UpdateReviewDto) {
+    return await this.prisma.review.update({
+      where: { id: id },
+      data: updateReviewDto,
+      include: {
+        profile: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            email: true,
+            profile: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+              },
+            },
+          },
+        },
+      },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} review`;
+  async remove(id: number) {
+    return await this.prisma.review.delete({
+      where: { id: id },
+      include: {
+        profile: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            email: true,
+            profile: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+              },
+            },
+          },
+        },
+      },
+    });
   }
 }
