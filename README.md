@@ -1,6 +1,6 @@
 <h1 align="center">Find a Tutor MERN App</h1>
 <h3 align="center">
-    <a href="https://find-a-tutor.onrender.com/">Live</a> · 
+    <a href="https://find-a-tutor.onrender.com/">Live</a>
 </h3>
 
 ## Table of Contents
