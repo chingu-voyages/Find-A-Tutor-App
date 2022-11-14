@@ -1,4 +1,4 @@
-<h1 align="center">Find a Tutor MERN App</h1>
+<h1 align="center">Find a Tutor SERN App</h1>
 <h3 align="center">
     <a href="https://find-a-tutor.onrender.com/">Live</a>
 </h3>
@@ -62,3 +62,4 @@
 
 ## Socials
 - Contact [riboney](https://github.com/riboney) at ribba#4809 on discord, for any project collaborations or inquiries!
+- Find Richard on [GitHub}(https://github.com/RichardZhang01), or [LinkedIn](https://www.linkedin.com/in/richard-zhiyuan-zhang/)
