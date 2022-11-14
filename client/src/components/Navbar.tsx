@@ -43,17 +43,17 @@ const Navbar = () => {
               className="menu menu-compact items-center gap-2 dropdown-content mt-12 p-4 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <NavLink to="#">
+                <NavLink to="findtutors">
                   <MagnifyingGlassIcon className="w-4" />
                   Find a Tutor
                 </NavLink>
               </li>
-              <li>
+              {/* <li>
                 <NavLink to="#">
                   <PencilIcon className="w-4" />
                   Start Tutoring
                 </NavLink>
-              </li>
+              </li> */}
               <div className="w-5/6">
                 <NavLink to="account/login">
                   <Button text="Log In" />
@@ -69,11 +69,11 @@ const Navbar = () => {
           <div className="hidden lg:flex">
             <ul className="flex items-center gap-6 mr-10 text-xl underline underline-offset-[6px] font-semibold">
               <li className="hover:text-secondary">
-                <a href="#">Find a Tutor</a>
+                <a href="findtutors">Find a Tutor</a>
               </li>
-              <li className="hover:text-secondary">
+              {/* <li className="hover:text-secondary">
                 <a href="#">Start Tutoring</a>
-              </li>
+              </li> */}
             </ul>
             <NavLink to="account/login">
               <Button text="Log In" custom={['mr-4']} />

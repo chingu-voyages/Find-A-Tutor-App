@@ -11,3 +11,9 @@
     @apply h-full;
   }
 }
+
+@layer components {
+  .card figure {
+    @apply justify-start;
+  }
+}

@@ -14,6 +14,7 @@ import ErrorPage from './pages/ErrorPage';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
 import Home from './pages/Home';
+import FindTutor from './pages/FindTutor';
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
@@ -36,6 +37,7 @@ function App() {
         <Route path="account/:id" element={<Profile />} />
         <Route path="account/register" element={<Register />} />
         <Route path="account/login" element={<Login />} />
+        <Route path="findtutors" element={<FindTutor />} />
       </Route>,
     ),
   );
