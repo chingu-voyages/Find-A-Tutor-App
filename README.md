@@ -1,6 +1,6 @@
-<h1 align="center">Find a Tutor MERN App</h1>
+<h1 align="center">Find a Tutor SERN App</h1>
 <h3 align="center">
-    <a href="https://find-a-tutor.onrender.com/">Live</a> · 
+    <a href="https://find-a-tutor.onrender.com/">Live</a>
 </h3>
 
 ## Table of Contents
@@ -44,7 +44,7 @@
 - Docker
 
 ### How to run
-- Please see [CONTRIBUTION.md](.github/contributing.md) for instructions
+- Please see [CONTRIBUTING.md](.github/contributing.md) for instructions
 
 ## Roadmap
 - [ ] Login & Registration
@@ -62,3 +62,6 @@
 
 ## Socials
 - Contact [riboney](https://github.com/riboney) at ribba#4809 on discord, for any project collaborations or inquiries!
+- Find Richard on [GitHub}(https://github.com/RichardZhang01), or [LinkedIn](https://www.linkedin.com/in/richard-zhiyuan-zhang/)
+- Contact Ticia on [![LinkedIn](LinkedIn)](https://www.linkedin.com/in/ticia-dunn/) or
+[![Github](GitHub)](https://github.com/TiciaD)
