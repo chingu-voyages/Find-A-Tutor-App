@@ -69,7 +69,7 @@ const Navbar = () => {
           <div className="hidden lg:flex">
             <ul className="flex items-center gap-6 mr-10 text-xl underline underline-offset-[6px] font-semibold">
               <li className="hover:text-secondary">
-                <a href="#">Find a Tutor</a>
+                <a href="/findtutors">Find a Tutor</a>
               </li>
               <li className="hover:text-secondary">
                 <a href="#">Start Tutoring</a>
