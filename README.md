@@ -63,3 +63,5 @@
 ## Socials
 - Contact [riboney](https://github.com/riboney) at ribba#4809 on discord, for any project collaborations or inquiries!
 - Find Richard on [GitHub}(https://github.com/RichardZhang01), or [LinkedIn](https://www.linkedin.com/in/richard-zhiyuan-zhang/)
+- Contact Ticia on [![LinkedIn](LinkedIn)](https://www.linkedin.com/in/ticia-dunn/) or
+[![Github](GitHub)](https://github.com/TiciaD)
