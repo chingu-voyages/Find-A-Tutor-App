@@ -1,4 +1,4 @@
-<h1 align="center">Find a Tutor SERN App</h1>
+<h1 align="center">Find a Tutor</h1>
 <h3 align="center">
     <a href="https://find-a-tutor.onrender.com/">Live</a>
 </h3>
