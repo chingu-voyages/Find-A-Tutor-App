@@ -18,7 +18,7 @@ class ProfileUserEntity {
   @Exclude()
   password: string;
 
-  @ApiProperty({ type: String, enum: ['STUDENT', 'TUTOR'] })
+  @ApiProperty({ type: String, enum: Role })
   role: Role;
 
   constructor(partial: Partial<ProfileUserEntity>) {

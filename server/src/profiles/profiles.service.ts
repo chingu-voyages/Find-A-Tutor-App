@@ -59,11 +59,11 @@ export class ProfilesService {
       throw new NotFoundException('No profiles found');
     }
 
-    const profilesWithAvgRating = await Promise.all(
+    const profilesWithRatings = await Promise.all(
       profiles.map(async (profile) => await this.addReviewData(profile)),
     );
 
-    const serializedProfiles = profilesWithAvgRating.map((profile) =>
+    const serializedProfiles = profilesWithRatings.map((profile) =>
       plainToClass(ProfileAndReviewDataEntity, profile),
     );
 
@@ -87,9 +87,12 @@ export class ProfilesService {
       );
     }
 
-    const profileWithAvgRating = await this.addReviewData(profile);
+    const profileWithRating = await this.addReviewData(profile);
 
-    const serializedProfile = plainToClass(ProfileEntity, profileWithAvgRating);
+    const serializedProfile = plainToClass(
+      ProfileAndReviewDataEntity,
+      profileWithRating,
+    );
 
     return serializedProfile;
   }

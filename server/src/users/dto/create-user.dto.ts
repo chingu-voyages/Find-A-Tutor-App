@@ -118,6 +118,6 @@ export class CreateUserDto {
 
   @IsEnum(Role, { message: 'role must be STUDENT or TUTOR' })
   @IsString()
-  @ApiProperty({ enum: ['STUDENT', 'TUTOR'], default: 'STUDENT' })
+  @ApiProperty({ type: String, enum: Role, default: 'STUDENT' })
   role: Role;
 }

@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Profile, Role, User } from '@prisma/client';
+import { Profile, Role } from '@prisma/client';
 import { Prisma } from '@prisma/client';
-import { Type } from 'class-transformer';
+import { Exclude, Type } from 'class-transformer';
 
 export class UserProfileEntity implements Profile {
   @ApiProperty()
@@ -52,7 +52,7 @@ export class UserProfileEntity implements Profile {
   }
 }
 
-export class UserEntity implements User {
+export class UserEntity {
   @ApiProperty()
   id: number;
 
@@ -65,10 +65,10 @@ export class UserEntity implements User {
   @ApiProperty()
   email: string;
 
-  @ApiProperty()
+  @Exclude()
   password: string;
 
-  @ApiProperty({ type: String, enum: ['STUDENT', 'TUTOR'] })
+  @ApiProperty({ type: String, enum: Role, default: 'STUDENT' })
   role: Role;
 
   @Type(() => UserProfileEntity)
@@ -81,6 +81,6 @@ export class UserEntity implements User {
 }
 
 export class UserEntityTutor extends UserEntity {
-  @ApiProperty({ type: String, enum: ['STUDENT', 'TUTOR'], default: 'TUTOR' })
+  @ApiProperty({ type: String, enum: Role, default: 'TUTOR' })
   role: Role;
 }

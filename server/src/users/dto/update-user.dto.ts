@@ -41,7 +41,8 @@ export class UpdateUserDto {
   @ApiProperty({
     required: false,
     nullable: true,
-    enum: ['STUDENT', 'TUTOR'],
+    type: String,
+    enum: Role,
     default: 'STUDENT',
   })
   role: Role;

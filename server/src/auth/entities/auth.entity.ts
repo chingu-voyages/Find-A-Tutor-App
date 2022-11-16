@@ -5,7 +5,7 @@ class UserAuthEntity {
   @ApiProperty()
   id: number;
 
-  @ApiProperty({ type: String, enum: ['STUDENT', 'TUTOR'] })
+  @ApiProperty({ type: String, enum: Role })
   role: Role;
 
   @ApiProperty()
