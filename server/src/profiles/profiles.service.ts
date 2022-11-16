@@ -7,34 +7,11 @@ import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { PrismaService } from './../prisma/prisma.service';
 import { plainToClass } from 'class-transformer';
-import { ProfileEntity } from './entities/profile.entity';
-import { Profile, Prisma } from '@prisma/client';
-
-interface profileData {
-  id: number;
-  firstName: string;
-  lastName: string;
-  age: number | null;
-  bio: string | null;
-  subjects: string | null;
-  edLevel: string | null;
-  rate: Prisma.Decimal | null;
-  phone: string | null;
-  city: string | null;
-  state: string | null;
-  profileUrl: string;
-  userId: number;
-  reviewsCount: number;
-  avgRating: number | null;
-  user: {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    email: string;
-    password: string;
-    role: string;
-  };
-}
+import {
+  ProfileAndReviewDataEntity,
+  ProfileEntity,
+} from './entities/profile.entity';
+import { ProfileData, ProfileWithReviewData } from './models/profile-types';
 
 @Injectable()
 export class ProfilesService {
@@ -82,38 +59,12 @@ export class ProfilesService {
       throw new NotFoundException('No profiles found');
     }
 
-    const profilesWithAvgRating: profileData[] = await Promise.all(
-      profiles.map(async (profile): Promise<profileData> => {
-        const reviewsCount = profile._count.reviews;
-        delete profile._count;
-
-        if (!reviewsCount) {
-          return {
-            ...profile,
-            reviewsCount,
-            avgRating: null,
-          };
-        }
-
-        const averageRating = await this.prisma.review.aggregate({
-          _avg: {
-            rating: true,
-          },
-          where: {
-            profileId: profile.id,
-          },
-        });
-
-        return {
-          ...profile,
-          reviewsCount,
-          avgRating: Number(averageRating._avg.rating.toFixed(1)),
-        };
-      }),
+    const profilesWithAvgRating = await Promise.all(
+      profiles.map(async (profile) => await this.addReviewData(profile)),
     );
 
     const serializedProfiles = profilesWithAvgRating.map((profile) =>
-      plainToClass(ProfileEntity, profile),
+      plainToClass(ProfileAndReviewDataEntity, profile),
     );
 
     return serializedProfiles;
@@ -122,7 +73,12 @@ export class ProfilesService {
   async findOne(id: number) {
     const profile = await this.prisma.profile.findUnique({
       where: { userId: id },
-      include: { user: true },
+      include: {
+        _count: {
+          select: { reviews: true },
+        },
+        user: true,
+      },
     });
 
     if (!profile) {
@@ -131,7 +87,9 @@ export class ProfilesService {
       );
     }
 
-    const serializedProfile = plainToClass(ProfileEntity, profile);
+    const profileWithAvgRating = await this.addReviewData(profile);
+
+    const serializedProfile = plainToClass(ProfileEntity, profileWithAvgRating);
 
     return serializedProfile;
   }
@@ -161,5 +119,37 @@ export class ProfilesService {
     const serializedProfile = plainToClass(ProfileEntity, deletedUser);
 
     return serializedProfile;
+  }
+
+  async getAverageRating(id: number) {
+    return await this.prisma.review.aggregate({
+      _avg: {
+        rating: true,
+      },
+      where: {
+        profileId: id,
+      },
+    });
+  }
+
+  async addReviewData(profile: ProfileData): Promise<ProfileWithReviewData> {
+    const reviewsCount = profile._count.reviews;
+    delete profile._count;
+
+    if (!reviewsCount) {
+      return {
+        ...profile,
+        reviewsCount,
+        avgRating: null,
+      };
+    }
+
+    const averageRating = await this.getAverageRating(profile.id);
+
+    return {
+      ...profile,
+      reviewsCount,
+      avgRating: Number(averageRating._avg.rating.toFixed(1)),
+    };
   }
 }

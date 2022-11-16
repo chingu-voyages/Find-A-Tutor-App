@@ -1,4 +1,4 @@
-import { ProfileEntity } from './profile.entity';
+import { ProfileAndReviewDataEntity, ProfileEntity } from './profile.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateProfileEntity {
@@ -13,8 +13,8 @@ export class GetProfilesEntity {
   @ApiProperty({ default: 200 })
   statusCode: number;
 
-  @ApiProperty({ type: [ProfileEntity] })
-  data: ProfileEntity[];
+  @ApiProperty({ type: [ProfileAndReviewDataEntity] })
+  data: ProfileAndReviewDataEntity[];
 }
 
 export class GetProfileEntity {
@@ -22,9 +22,15 @@ export class GetProfileEntity {
   statusCode: number;
 
   @ApiProperty()
+  data: ProfileAndReviewDataEntity;
+}
+
+export class UpdateProfileEntity {
+  @ApiProperty({ default: 200 })
+  statusCode: number;
+
+  @ApiProperty()
   data: ProfileEntity;
 }
 
-export class UpdateProfileEntity extends GetProfileEntity {}
-
-export class DeleteProfileEntity extends GetProfileEntity {}
+export class DeleteProfileEntity extends UpdateProfileEntity {}

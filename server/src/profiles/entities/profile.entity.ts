@@ -1,6 +1,6 @@
 import { Prisma, Role } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
+import { Exclude, Type } from 'class-transformer';
 
 class ProfileUserEntity {
   @ApiProperty()
@@ -15,7 +15,7 @@ class ProfileUserEntity {
   @ApiProperty()
   email: string;
 
-  @ApiProperty()
+  @Exclude()
   password: string;
 
   @ApiProperty({ type: String, enum: ['STUDENT', 'TUTOR'] })
@@ -25,16 +25,6 @@ class ProfileUserEntity {
     Object.assign(this, partial);
   }
 }
-
-// export class reviewData {
-//   @ApiProperty({ required: false })
-//   _count: {
-//     reviews: number;
-//   };
-
-//   @ApiProperty({ required: false, nullable: true })
-//   avgRating: number | null;
-// }
 
 export class ProfileEntity {
   @ApiProperty()
@@ -84,13 +74,19 @@ export class ProfileEntity {
   @ApiProperty()
   user: ProfileUserEntity;
 
+  constructor(partial: Partial<ProfileEntity>) {
+    Object.assign(this, partial);
+  }
+}
+
+export class ProfileAndReviewDataEntity extends ProfileEntity {
   @ApiProperty({ required: false })
-  reviewsCount: number | null;
+  reviewsCount: number;
 
   @ApiProperty({ required: false, nullable: true })
   avgRating: number | null;
 
-  constructor(partial: Partial<ProfileEntity>) {
+  super(partial: Partial<ProfileAndReviewDataEntity>) {
     Object.assign(this, partial);
   }
 }
