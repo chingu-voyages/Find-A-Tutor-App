@@ -8,6 +8,33 @@ import { UpdateProfileDto } from './dto/update-profile.dto';
 import { PrismaService } from './../prisma/prisma.service';
 import { plainToClass } from 'class-transformer';
 import { ProfileEntity } from './entities/profile.entity';
+import { Profile, Prisma } from '@prisma/client';
+
+interface profileData {
+  id: number;
+  firstName: string;
+  lastName: string;
+  age: number | null;
+  bio: string | null;
+  subjects: string | null;
+  edLevel: string | null;
+  rate: Prisma.Decimal | null;
+  phone: string | null;
+  city: string | null;
+  state: string | null;
+  profileUrl: string;
+  userId: number;
+  reviewsCount: number;
+  avgRating: number | null;
+  user: {
+    id: number;
+    createdAt: Date;
+    updatedAt: Date;
+    email: string;
+    password: string;
+    role: string;
+  };
+}
 
 @Injectable()
 export class ProfilesService {
@@ -43,14 +70,49 @@ export class ProfilesService {
 
   async findAll() {
     const profiles = await this.prisma.profile.findMany({
-      include: { user: true },
+      include: {
+        _count: {
+          select: { reviews: true },
+        },
+        user: true,
+      },
     });
 
     if (!profiles.length) {
       throw new NotFoundException('No profiles found');
     }
 
-    const serializedProfiles = profiles.map((profile) =>
+    const profilesWithAvgRating: profileData[] = await Promise.all(
+      profiles.map(async (profile): Promise<profileData> => {
+        const reviewsCount = profile._count.reviews;
+        delete profile._count;
+
+        if (!reviewsCount) {
+          return {
+            ...profile,
+            reviewsCount,
+            avgRating: null,
+          };
+        }
+
+        const averageRating = await this.prisma.review.aggregate({
+          _avg: {
+            rating: true,
+          },
+          where: {
+            profileId: profile.id,
+          },
+        });
+
+        return {
+          ...profile,
+          reviewsCount,
+          avgRating: Number(averageRating._avg.rating.toFixed(1)),
+        };
+      }),
+    );
+
+    const serializedProfiles = profilesWithAvgRating.map((profile) =>
       plainToClass(ProfileEntity, profile),
     );
 
