@@ -39,6 +39,28 @@ export class ReviewsService {
           connect: { id: createReviewDto.userId },
         },
       },
+      include: {
+        profile: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            role: true,
+            profile: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+              },
+            },
+          },
+        },
+      },
     });
   }
 

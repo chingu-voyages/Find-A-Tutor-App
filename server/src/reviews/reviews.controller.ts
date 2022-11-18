@@ -14,7 +14,14 @@ import { Response } from 'express';
 import { ReviewsService } from './reviews.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  CreateReviewEntity,
+  DeleteReviewEntity,
+  GetReviewEntity,
+  GetReviewsEntity,
+  UpdateReviewEntity,
+} from './entities/review-responses.entity';
 
 @Controller('reviews')
 @ApiTags('reviews')
@@ -22,8 +29,9 @@ export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {}
 
   @Post()
-  create(@Body() createReviewDto: CreateReviewDto, @Res() res: Response) {
-    const createdReview = this.reviewsService.create(createReviewDto);
+  @ApiCreatedResponse({ type: CreateReviewEntity })
+  async create(@Body() createReviewDto: CreateReviewDto, @Res() res: Response) {
+    const createdReview = await this.reviewsService.create(createReviewDto);
 
     return res.status(HttpStatus.CREATED).json({
       statusCode: HttpStatus.CREATED,
@@ -32,8 +40,9 @@ export class ReviewsController {
   }
 
   @Get()
-  findAll(@Res() res: Response) {
-    const reviews = this.reviewsService.findAll();
+  @ApiOkResponse({ type: GetReviewsEntity })
+  async findAll(@Res() res: Response) {
+    const reviews = await this.reviewsService.findAll();
 
     return res.status(HttpStatus.OK).json({
       statusCode: HttpStatus.OK,
@@ -42,11 +51,12 @@ export class ReviewsController {
   }
 
   @Get('tutor/:profileId')
-  findAllByTutor(
+  @ApiOkResponse({ type: GetReviewsEntity })
+  async findAllByTutor(
     @Param('profileId', ParseIntPipe) profileId: number,
     @Res() res: Response,
   ) {
-    const reviews = this.reviewsService.findAllByTutor(profileId);
+    const reviews = await this.reviewsService.findAllByTutor(profileId);
 
     return res.status(HttpStatus.OK).json({
       statusCode: HttpStatus.OK,
@@ -55,11 +65,12 @@ export class ReviewsController {
   }
 
   @Get('student/:userId')
-  findAllByStudent(
+  @ApiOkResponse({ type: GetReviewsEntity })
+  async findAllByStudent(
     @Param('userId', ParseIntPipe) userId: number,
     @Res() res: Response,
   ) {
-    const reviews = this.reviewsService.findAllByStudent(userId);
+    const reviews = await this.reviewsService.findAllByStudent(userId);
 
     return res.status(HttpStatus.OK).json({
       statusCode: HttpStatus.OK,
@@ -68,8 +79,9 @@ export class ReviewsController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
-    const review = this.reviewsService.findOne(id);
+  @ApiOkResponse({ type: GetReviewEntity })
+  async findOne(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
+    const review = await this.reviewsService.findOne(id);
 
     return res.status(HttpStatus.OK).json({
       statusCode: HttpStatus.OK,
@@ -78,12 +90,13 @@ export class ReviewsController {
   }
 
   @Patch(':id')
-  update(
+  @ApiOkResponse({ type: UpdateReviewEntity })
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateReviewDto: UpdateReviewDto,
     @Res() res: Response,
   ) {
-    const updatedReview = this.reviewsService.update(id, updateReviewDto);
+    const updatedReview = await this.reviewsService.update(id, updateReviewDto);
 
     return res.status(HttpStatus.OK).json({
       statusCode: HttpStatus.OK,
@@ -92,8 +105,9 @@ export class ReviewsController {
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
-    const deletedReview = this.reviewsService.remove(id);
+  @ApiOkResponse({ type: DeleteReviewEntity })
+  async remove(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
+    const deletedReview = await this.reviewsService.remove(id);
 
     return res.status(HttpStatus.OK).json({
       statusCode: HttpStatus.OK,
